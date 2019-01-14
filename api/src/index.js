@@ -6,14 +6,21 @@ import bodyParser from 'body-parser';
 import {connect} from "./config/database";
 import nodemailer from "nodemailer";
 import {smtp} from "./config/email";
-import ApiRouter from "./routes/";
+import colors from 'colors'
+import {MongoClient} from 'mongodb'
 import userRouter from "./routes/customer";
 import path from 'path';
+import  common from "./lib/common";
+import mongodbUri from 'mongodb-uri'
 
 //set base name of api
 let base_path = '/api/v1';
+//import config
+let config = common.getConfig();
+
 // Email Config
 let email = nodemailer.createTransport(smtp);
+
 const PORT = normalizePort(process.env.PORT || '9001');
 
 const app = express();
@@ -60,6 +67,28 @@ connect((err, db) => {
     app.server.on('listening', onListening);
 
 });
+
+MongoClient.connect(config.databaseConnectionString, {}, (err, client) => {
+    // On connection error we display then exit
+    if(err){
+        console.log(colors.red('Error connecting to MongoDB: ' + err));
+        process.exit(2);
+    }
+
+    // select DB
+    const dbUriObj = mongodbUri.parse(config.databaseConnectionString);
+    let db = client.db(dbUriObj.database);
+    // setup the collections
+    db.users = db.collection('users');
+    db.products = db.collection('products');
+    db.orders = db.collection('orders');
+    // add db to app for routes
+    app.dbClient = client;
+    app.db = db;
+    app.config = config;
+
+});
+
 function addBasePath(other_part){
     return base_path+other_part;
 }
