@@ -1,16 +1,13 @@
 import _ from 'lodash'
-import bcrypt from 'bcrypt'
-import {ObjectID} from 'mongodb'
-import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs'
+
 import {Auth} from "./auth";
+import validateInput from '../util/validations/signup'
 
 const saltRounds = 10;
 
 
 class User{
-
-
-
     constructor(app){
         this.app = app;
         this.model = {
@@ -48,32 +45,25 @@ class User{
      */
     validate(cb = () => {}){
         const MIN_PASSWORD_LENGTH = 3;
-
-
-        let errors = [];
+        //todo validate that firstname,lastname,email,phoneNumber are not null, others can be at initial signup 
+        let val_errors = [];
 
 
         const model = this.model;
         const db = this.app.db;
 
-
-        if(model.password.length < MIN_PASSWORD_LENGTH  ){
-
-            errors.push({
-                message: "Password should more than 8 characters."
-            });
+        let {errors,isValid}=validateInput(model);
+        console.log("errors : "+JSON.stringify(errors));
+        console.log("isValid : "+isValid);
+        if(!isValid){
+            return cb(errors)
         }
 
         this.findUserByEmail(model.email, (err, user) => {
-
-
             if(err || user){
-
-                errors.push({message: "Email already exists."});
+                val_errors.push({message: "Email already exists."});
             }
-
-
-            return cb(errors);
+            return cb(val_errors);
         });
 
 
@@ -89,8 +79,6 @@ class User{
         db.collection('users').find(query).limit(1).toArray((err, result) => {
             return callback(err, _.get(result, '[0]', null));
         });
-
-
     }
 
     /*
@@ -103,22 +91,11 @@ class User{
         model.password = hashPassword;
 
         this.validate((errors) => {
-
-
-
             let messages = [];
 
-            if(errors.length > 0){
-
-                _.each(errors, (err) => {
-
-                    messages.push(err.message);
-                });
-
-                return cb(_.join(messages, ','), null);
-
+            if(errors){
+                return cb(errors, null);
             }
-
             db.collection('users').insertOne(model, (err, result) => {
                 return cb(err, model);
             });
@@ -146,14 +123,11 @@ class User{
         }
 
         this.findUserByEmail(email, (err, user) => {
-
-
             if(err === null && user){
                 //compare the password gotten from user and the one already saved in db
                 const passwordCheck = bcrypt.compareSync(password, user.password);
 
                 if(passwordCheck){
-
                     // create new token and return this token key for user and use it for later request.
                     const auth = new Auth(app);
 
@@ -167,14 +141,13 @@ class User{
                     });
                 }
                 else{
-                    error = {message: "Password does not match."};
+                    error = {message: "Invalid Email or Password "};
                     return callback(error, null);
 
                 }
             }
             if(err || !user){
-                error = {message: "An error login your account"};
-
+                error = {message: "No user match found"};
                 return callback(error, null);
             }
         });

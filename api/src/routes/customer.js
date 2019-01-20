@@ -9,24 +9,17 @@ router.post('/',(req,res)=>{
 
     const body = _.get(req, 'body');
     const app = _.get(req,'app');
-
-    console.log("Data from frontend posted: ", body);
-
     const user = new User(app);
     user.initWithObject(body).create((err, newUser) => {
-
         console.log("New user created with error & callback: ", err, newUser);
-
-
         if(err){
-            return res.status(503).json({
+            return res.status(400).json({
                 error: {message: err}
             });
         }
         return res.status(200).json(newUser);
     });
 });
-
 
 //login user action
 router.post('/login',(req,res)=>{
@@ -39,9 +32,8 @@ router.post('/login',(req,res)=>{
     user.login(email, password, (err, token) => {
 
         if(err){
-
             return res.status(401).json({
-                message: "An error login your account. Please try again!"
+                message: err.message
             });
         }
 

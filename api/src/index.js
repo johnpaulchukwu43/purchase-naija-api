@@ -3,7 +3,6 @@ import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
-import {connect} from "./config/database";
 import nodemailer from "nodemailer";
 import {smtp} from "./config/email";
 import colors from 'colors'
@@ -39,35 +38,6 @@ app.use(express.static(path.join(__dirname, 'build')));
 app.set('root', __dirname);
 app.email = email;
 //Connect to the database.
-connect((err, db) => {
-
-    if(err){
-        console.log("An error connecting to the database", err);
-        throw (err);
-    }
-
-    app.db = db;
-    app.set('db', db);
-
-
-    // init routers.
-    app.use(addBasePath('/user'),userRouter);
-
-    app.use((req, res, next) => {
-        let err = new Error('Not Found');
-        err.status = 404;
-        next(err);
-    });
-
-    /**
-     * Listen on provided port, on all network interfaces.
-     */
-    app.server.listen(PORT);
-    app.server.on('error', onError);
-    app.server.on('listening', onListening);
-
-});
-
 MongoClient.connect(config.databaseConnectionString, {}, (err, client) => {
     // On connection error we display then exit
     if(err){
@@ -86,6 +56,21 @@ MongoClient.connect(config.databaseConnectionString, {}, (err, client) => {
     app.dbClient = client;
     app.db = db;
     app.config = config;
+    // init routers.
+    app.use(addBasePath('/user'),userRouter);
+
+    app.use((req, res, next) => {
+        let err = new Error('Not Found');
+        err.status = 404;
+        next(err);
+    });
+
+    /**
+     * Listen on provided port, on all network interfaces.
+     */
+    app.server.listen(PORT);
+    app.server.on('error', onError);
+    app.server.on('listening', onListening);
 
 });
 
