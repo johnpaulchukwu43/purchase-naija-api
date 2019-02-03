@@ -3,6 +3,39 @@ mongoose.Promise = global.Promise;
 const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt-nodejs');
 
+const usernameLengthChecker = (username) => {
+    if(!username){
+        return false;
+    } else {
+        if (username.length < 7 || username.length > 50){
+            return false;
+        } else {
+            return true;
+        }
+    }
+}
+
+const validPasswordChecker = (password) => {
+    if (!password){
+        return false;
+    } else {
+        const regExp = new RegExp(/^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[\d])(?=.*?[\W]).{8,35}$/);
+        return regExp.test(password);
+    }
+}
+
+const passwordLengthChecker = (password) => {
+    if(!password){
+        return false;
+    } else {
+        if (password.length < 6 || password.length > 50){
+            return false;
+        } else {
+            return true;
+        }
+    }
+}
+
 const emailLengthChecker = (email) => {
     if(!email){
         return false;
@@ -24,27 +57,6 @@ const validEmailChecker = (email) => {
     }
 }
 
-const validPasswordChecker = (password) => {
-    if (!password){
-        return false;
-    } else {
-        const regExp = new RegExp(/^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[\d])(?=.*?[\W]).{8,35}$/);
-        return regExp.test(password);
-    }
-}
-
-const passwordLengthChecker = (password) => {
-    if(!password){
-        return false;
-    } else {
-        if (password.length < 3 || password.length > 50){
-            return false;
-        } else {
-            return true;
-        }
-    }
-}
-
 const validPhone = (phoneNumber) => {
     if (!phoneNumber){
         return false;
@@ -56,10 +68,15 @@ const validPhone = (phoneNumber) => {
 
 const passwordValidate = [
     {
-        validator: passwordLengthChecker, message : 'Password must be between 3 and 50 characters'
+        validator: passwordLengthChecker, message : 'Password must be between 6 and 50 characters'
     },
     {
         validator: validPasswordChecker, message: 'Password is invalid - Password must have a lowercase, uppercase letter, a symbol and atleast a number'
+    }
+];
+const usernameValidate = [
+    {
+        validator: usernameLengthChecker, message : 'Username must be between 7 and 50 characters'
     }
 ];
 const emailValidate = [
@@ -77,18 +94,16 @@ const phoneNumberValidate = [
     }
 ];
 
-const UserSchema = new Schema ({
+const serviceProviderSchema = new Schema ({
+    businessName: { type: String, required: true, unique: true } ,
     email: { type: String, required: true, unique: true, validate: emailValidate } ,
-    password: { type: String, required: true, validate: passwordValidate },
-    firstname: { type: String, required: true } ,
-    lastname: { type: String, required: true },
-    billingAddress1: { type: String, required: true },
-    billingAddress2: { type: String},
-    phoneNumber: { type: String, validate: phoneNumberValidate }
+    billingAddress: { type: String, required: true },
+    phoneNumber: { type: String, validate: phoneNumberValidate },
+    password: { type: String, required: true, validate: passwordValidate }
 });
 
 // hash the password
-UserSchema.pre('save', function (next) {
+serviceProviderSchema.pre('save', function (next) {
     var user = this;
     if(!user.isModified('password')) return next();
     bcrypt.genSalt(10, function (err, salt) {
@@ -102,9 +117,9 @@ UserSchema.pre('save', function (next) {
 });
 
 //compare password in the database
-UserSchema.methods.comparePassword = function (password) {
+serviceProviderSchema.methods.comparePassword = function (password) {
     return bcrypt.compareSync(password, this.password)  ;
 };
 
 
-module.exports = mongoose.model('User', UserSchema);
+module.exports = mongoose.model('serviceProvider', serviceProviderSchema);
