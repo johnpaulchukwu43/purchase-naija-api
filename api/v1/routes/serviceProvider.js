@@ -39,21 +39,21 @@ module.exports = function(router){
 
 
     // register SP api
-    router.post('/serviceProvider/signup', function (req, res) {
+    router.post('api/v1/serviceProvider/signup', function (req, res) {
         if (!req.body.businessName) {
-            res.json({success: false, message: 'Business Name is required'});
+            res.status(400).json({success: false, message: 'Business Name is required'});
         } else {
             if (!req.body.email) {
-                res.json({success: false, message: 'Email is required'});
+                res.status(400).json({success: false, message: 'Email is required'});
             }else {
                 if (!req.body.billingAddress) {
-                    res.json({success: false, message: 'Billing Address is required'});
+                    res.status(400).json({success: false, message: 'Billing Address is required'});
                 } else {
                     if (!req.body.password) {
-                        res.json({success: false, message: 'Password is required'});
+                        res.status(400).json({success: false, message: 'Password is required'});
                     } else {
                         if (!req.body.phoneNumber) {
-                            res.json({success: false, message: 'Phone Number is required'});
+                            res.status(400).json({success: false, message: 'Phone Number is required'});
                         } else {
                         var serviceProvider = new ServiceProvider({
                             businessName: req.body.businessName,
@@ -65,33 +65,33 @@ module.exports = function(router){
                         serviceProvider.save(function (err) {
                             if (err) {
                                 if (err.code === 11000) {
-                                    res.json({success: false, message: 'Username already exists'});
+                                    res.status(400).json({success: false, message: 'Username already exists'});
                                 } else {
                                     if (err.errors) {
                                         if (err.errors.businessName) {
-                                            res.json({success: false, message: err.errors.businessName.message});
+                                            res.status(400).json({success: false, message: err.errors.businessName.message});
                                         } else {
                                             if (err.errors.password) {
-                                                res.json({success: false, message: err.errors.password.message });
+                                                res.status(400).json({success: false, message: err.errors.password.message });
                                             } else {
                                                 if (err.errors.email) {
-                                                    res.json({success: false, message: err.errors.email.message });
+                                                    res.status(400).json({success: false, message: err.errors.email.message });
                                                 } else {
                                                     if (err.errors.phoneNumber) {
-                                                        res.json({success: false, message: err.errors.phoneNumber.message})
+                                                        res.status(400).json({success: false, message: err.errors.phoneNumber.message})
                                                     } else {
-                                                        res.json({success: false, message: err});
+                                                        res.status(400).json({success: false, message: err});
                                                     }
                                                 }
                                             }
                                         }
 
                                     } else {
-                                        res.json({success: false, message: 'Could not create user'});
+                                        res.status(500).json({success: false, message: 'Could not create user'});
                                     }
                                 }
                             } else {
-                                res.json({success: true, message: 'Account Created'});
+                                res.status(200).json({success: true, message: 'Account Created'});
                             }
                         });
                     }
@@ -103,26 +103,26 @@ module.exports = function(router){
 
 
     // logging api functionality
-    router.post('/serviceProvider/login', function(req,res){
+    router.post('api/v1/serviceProvider/login', function(req,res){
         if (!req.body.businessName){
-            res.json({ success: false, message: 'Business Name must be provided'});
+            res.status(400).json({ success: false, message: 'Business Name must be provided'});
         } else {
             if (!req.body.password){
-                res.json({ success: false, message: 'No password was provided'});
+                res.status(400).json({ success: false, message: 'No password was provided'});
             } else {
                 ServiceProvider.findOne({ businessName: req.body.businessName}, function (err,serviceProvider) {
                     if (err){
-                        res.json({ success: false, message: 'An error occurred'});
+                        res.status(500).json({ success: false, message: 'An error occurred'});
                     } else {
                         if (!serviceProvider){
-                            res.json({ success: false, message: 'User was not found.'});
+                            res.status(400).json({ success: false, message: 'User was not found.'});
                         } else {
                             const validPassword = serviceProvider.comparePassword(req.body.password);
                             if (!validPassword){
-                                res.json ({ success: false, message: 'Password was invalid' });
+                                res.status(400).json ({ success: false, message: 'Password was invalid' });
                             } else {
                                 const token = jwt.sign({ staffId: serviceProvider._id}, config.secretKey, {expiresIn: '5h'});
-                                res.json({ success: true, message: 'Success!', token: token, serviceProvider: {
+                                res.status(200).json({ success: true, message: 'Success!', token: token, serviceProvider: {
                                         id: serviceProvider._id
                                 }});
                             }
@@ -135,21 +135,21 @@ module.exports = function(router){
 
     //Update user information
 
-    router.put('/serviceProvider/:id', function (req, res) {
+    router.put('api/v1/serviceProvider/:id', function (req, res) {
         if (!req.body.businessName) {
-            res.json({success: false, message: 'Business Name is required'});
+            res.status(400).json({success: false, message: 'Business Name is required'});
         } else {
             if (!req.body.email) {
-                res.json({success: false, message: 'Email is required'});
+                res.status(400).json({success: false, message: 'Email is required'});
             }else {
                 if (!req.body.billingAddress) {
-                    res.json({success: false, message: 'Billing Address is required'});
+                    res.status(400).json({success: false, message: 'Billing Address is required'});
                 } else {
                     if (!req.body.password) {
-                        res.json({success: false, message: 'Password is required'});
+                        res.status(400).json({success: false, message: 'Password is required'});
                     } else {
                         if (!req.body.phoneNumber) {
-                            res.json({success: false, message: 'Phone Number is required'});
+                            res.status(400).json({success: false, message: 'Phone Number is required'});
                         } else {
                             ServiceProvider.findByIdAndUpdate(req.params.id, {
                                 businessName: req.body.businessName,
@@ -159,9 +159,9 @@ module.exports = function(router){
                                 phoneNumber: req.body.phoneNumber
                             }, function (err) {
                                 if (err) {
-                                    res.json({success: false, message: 'User Information could not be updated'});
+                                    res.status(500).json({success: false, message: 'User Information could not be updated'});
                                 } else {
-                                    res.json({success: true, message: 'User Information Updated'});
+                                    res.status(200).json({success: true, message: 'User Information Updated'});
                                 }
                             });
                         }
@@ -173,15 +173,15 @@ module.exports = function(router){
 
     //API to get a particular user
 
-    router.get('/user/:id', function (req, res) {
+    router.get('api/v1/user/:id', function (req, res) {
         User.findOne({ id: req.params.id}, function (err, user) {
             if (err) {
-                res.json({success: false, message: err});
+                res.status(500).json({success: false, message: err});
             } else {
                 if (!user) {
-                    res.json({success: false, message: 'User was not found'});
+                    res.status(400).json({success: false, message: 'User was not found'});
                 } else {
-                    res.json({ success: false, user: user});
+                    res.status(200).json({ success: false, user: user});
                 }
             }
         }) ;
@@ -189,21 +189,21 @@ module.exports = function(router){
 
     //Create Products
 
-    router.post('/serviceProvider/products', function (req, res) {
+    router.post('api/v1/serviceProvider/products', function (req, res) {
        if (!req.body.name) {
-           res.json({success: false, message:'Product Name is required'});
+           res.status(400).json({success: false, message:'Product Name is required'});
        } else {
            if (!req.body.price) {
-               res.json({success: false, message:'Price of the product is required'});
+               res.status(400).json({success: false, message:'Price of the product is required'});
            } else {
                if (!req.body.description) {
-                   res.json({success: false, message:'Description of the product is required'});
+                   res.status(400).json({success: false, message:'Description of the product is required'});
                } else {
                    if (!req.body.quantity){
-                       res.json({success: false, message:'Quantity of available product is required'});
+                       res.status(400).json({success: false, message:'Quantity of available product is required'});
                    } else {
                        if (!req.body.productCategory) {
-                           res.json({success: false, message:'Product Category is required'});
+                           res.status(400).json({success: false, message:'Product Category is required'});
                        } else {
 
 /*
@@ -231,9 +231,9 @@ module.exports = function(router){
                                });
                                product.save(function (err) {
                                    if (err) {
-                                       res.json({success: false, message: 'An error occurred', error: err});
+                                       res.status(500).json({success: false, message: 'An error occurred', error: err});
                                    } else {
-                                       res.json({success: true, message: 'Product has been created'});
+                                       res.status(200).json({success: true, message: 'Product has been created'});
                                    }
                                });
                            // });
@@ -248,21 +248,21 @@ module.exports = function(router){
 
     //Update Product
 
-    router.put('/serviceProvider/products/:id', function (req, res) {
+    router.put('api/v1/serviceProvider/products/:id', function (req, res) {
         if (!req.body.name) {
-            res.json({success: false, message:'Product Name is required'});
+            res.status(400).json({success: false, message:'Product Name is required'});
         } else {
             if (!req.body.price) {
-                res.json({success: false, message:'Price of the product is required'});
+                res.status(400).json({success: false, message:'Price of the product is required'});
             } else {
                 if (!req.body.description) {
-                    res.json({success: false, message:'Description of the product is required'});
+                    res.status(400).json({success: false, message:'Description of the product is required'});
                 } else {
                     if (!req.body.quantity){
-                        res.json({success: false, message:'Quantity of available product is required'});
+                        res.status(400).json({success: false, message:'Quantity of available product is required'});
                     } else {
                         if (!req.body.productCategory) {
-                            res.json({success: false, message:'Product Category is required'});
+                            res.status(400).json({success: false, message:'Product Category is required'});
                         } else {
 
                             var imagePath = '';
@@ -287,9 +287,9 @@ module.exports = function(router){
                                     updatedAt: Date.now()
                                 }, function (err) {
                                     if (err) {
-                                        res.json({success: false, message: 'Product could not be updated'});
+                                        res.status(500).json({success: false, message: 'Product could not be updated'});
                                     } else {
-                                        res.json({success: true, message: 'Product has been updated'});
+                                        res.status(200).json({success: true, message: 'Product has been updated'});
                                     }
                                 });
                             // });
@@ -302,12 +302,12 @@ module.exports = function(router){
     });
 
     //Delete product
-    router.delete('/serviceProvider/products/:id', function (req,res) {
+    router.delete('api/v1/serviceProvider/products/:id', function (req,res) {
        Products.findByIdAndRemove({_id: req.params.id}).then(function (done) {
          if(done){
-             res.json({success: true, message: 'Product was successfully deleted'});
+             res.status(200).json({success: true, message: 'Product was successfully deleted'});
          }  else {
-             res.json({success: false, message:'An error occurred. Try again later.'});
+             res.status(500).json({success: false, message:'An error occurred. Try again later.'});
          }
        });
     });
