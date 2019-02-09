@@ -40,12 +40,12 @@ var upload = multer({ storage: storage }).single('file');
 module.exports = function(router){
 
     // register admin api
-    router.post('/admin/signup', function (req, res) {
+    router.post('api/v1/admin/signup', function (req, res) {
         if (!req.body.username) {
-            res.json({success: false, message: 'Username is required'});
+            res.status(400).json({success: false, message: 'Username is required'});
         } else {
             if (!req.body.password) {
-                res.json({success: false, message: 'Password is required'});
+                res.status(400).json({success: false, message: 'Password is required'});
             }
             else {
                 var admin = new Admin({
@@ -55,27 +55,27 @@ module.exports = function(router){
                 admin.save(function (err) {
                     if (err) {
                         if (err.code === 11000) {
-                            res.json({success: false, message: 'Username already exists'});
+                            res.status(400).json({success: false, message: 'Username already exists'});
                         } else {
                             if (err.errors) {
                                 if (err.errors.username) {
-                                    res.json({success: false, message: err.errors.username.message });
+                                    res.status(400).json({success: false, message: err.errors.username.message });
                                 } else {
                                     if (err.errors.password) {
-                                        res.json({
+                                        res.status(400).json({
                                             success: false,
                                             message: err.errors.password.message
                                         });
                                     } else {
-                                        res.json({ success: false, message: err });
+                                        res.status(400).json({ success: false, message: err });
                                     }
                                 }
                             } else {
-                                res.json({success: false, message: 'Could not create user'});
+                                res.status(500).json({success: false, message: 'Could not create user'});
                             }
                         }
                     } else {
-                        res.json({success: true, message: 'Account Created'});
+                        res.status(200).json({success: true, message: 'Account Created'});
                     }
                 });
             }
@@ -83,26 +83,26 @@ module.exports = function(router){
     });
 
     // logging api functionality
-    router.post('/admin/login', function(req,res){
+    router.post('api/v1/admin/login', function(req,res){
         if (!req.body.username){
-            res.json({ success: false, message: 'Username must be provided'});
+            res.status(400).json({ success: false, message: 'Username must be provided'});
         } else {
             if (!req.body.password){
-                res.json({ success: false, message: 'No password was provided'});
+                res.status(400).json({ success: false, message: 'No password was provided'});
             } else {
                 Admin.findOne({ username: req.body.username}, function (err,admin) {
                     if (err){
-                        res.json({ success: false, message: 'An error occurred'});
+                        res.status(500).json({ success: false, message: 'An error occurred'});
                     } else {
                         if (!admin){
-                            res.json({ success: false, message: 'User was not found.'});
+                            res.status(400).json({ success: false, message: 'User was not found.'});
                         } else {
                             const validPassword = admin.comparePassword(req.body.password);
                             if (!validPassword){
-                                res.json ({ success: false, message: 'Password was invalid' });
+                                res.status(400).json ({ success: false, message: 'Password was invalid' });
                             } else {
                                 const token = jwt.sign({ adminId: admin._id}, config.secretKey, {expiresIn: '5h'});
-                                res.json({ success: true, message: 'Success!', token: token, admin: {
+                                res.status(200).json({ success: true, message: 'Success!', token: token, admin: {
                                         username: admin.username
                                     }});
                             }
@@ -116,12 +116,12 @@ module.exports = function(router){
 
 
     // register staff api
-    router.post('/admin/registerStaff', function (req, res) {
+    router.post('api/v1/admin/registerStaff', function (req, res) {
         if (!req.body.username) {
-            res.json({success: false, message: 'Username is required'});
+            res.status(400).json({success: false, message: 'Username is required'});
         } else {
             if (!req.body.password) {
-                res.json({success: false, message: 'Password is required'});
+                res.status(400).json({success: false, message: 'Password is required'});
             }
             else {
                 var staff = new Staff({
@@ -131,27 +131,27 @@ module.exports = function(router){
                 staff.save(function (err) {
                     if (err) {
                         if (err.code === 11000) {
-                            res.json({success: false, message: 'Username already exists'});
+                            res.status(500).json({success: false, message: 'Username already exists'});
                         } else {
                             if (err.errors) {
                                 if (err.errors.username) {
-                                    res.json({success: false, message: err.errors.username.message });
+                                    res.status(400).json({success: false, message: err.errors.username.message });
                                 } else {
                                     if (err.errors.password) {
-                                        res.json({
+                                        res.status(400).json({
                                             success: false,
                                             message: err.errors.password.message
                                         });
                                     } else {
-                                        res.json({ success: false, message: err });
+                                        res.status(400).json({ success: false, message: err });
                                     }
                                 }
                             } else {
-                                res.json({success: false, message: 'Could not create user'});
+                                res.status(500).json({success: false, message: 'Could not create user'});
                             }
                         }
                     } else {
-                        res.json({success: true, message: 'Account Created'});
+                        res.status(200).json({success: true, message: 'Account Created'});
                     }
                 });
             }
@@ -160,15 +160,15 @@ module.exports = function(router){
 
     //API to get a particular user
 
-    router.get('/user/:id', function (req, res) {
+    router.get('api/v1/user/:id', function (req, res) {
        User.findOne({ id: req.params.id}, function (err, user) {
            if (err) {
-               res.json({success: false, message: err});
+               res.status(500).json({success: false, message: err});
            } else {
                if (!user) {
-                   res.json({success: false, message: 'User was not found'});
+                   res.status(400).json({success: false, message: 'User was not found'});
                } else {
-                   res.json({ success: false, user: user});
+                   res.status(200).json({ success: false, user: user});
                }
            }
        }) ;
@@ -287,12 +287,12 @@ module.exports = function(router){
     });*/
 
     //Delete product
-    router.delete('/serviceProvider/products/:id', function (req,res) {
+    router.delete('api/v1/serviceProvider/products/:id', function (req,res) {
         Products.findByIdAndRemove({_id: req.params.id}).then(function (done) {
             if(done){
-                res.json({success: true, message: 'Product was successfully deleted'});
+                res.status(200).json({success: true, message: 'Product was successfully deleted'});
             }  else {
-                res.json({success: false, message:'An error occurred. Try again later.'});
+                res.status(400).json({success: false, message:'An error occurred. Try again later.'});
             }
         });
     });
