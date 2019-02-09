@@ -5,7 +5,8 @@ const ServiceProvider = require('../models/serviceProvider');
 const config = require('../config/secret');
 const jwt = require('jsonwebtoken');
 var randomstring = require("randomstring");
-
+//todo add back my basePath
+//todo
 const multer = require('multer');
 
 // set the directory for the uploads to the uploaded to
@@ -108,18 +109,18 @@ module.exports = function(router){
             res.json({ success: false, message: 'Business Name must be provided'});
         } else {
             if (!req.body.password){
-                res.json({ success: false, message: 'No password was provided'});
+                res.status(400).json({ success: false, message: 'No password was provided'});
             } else {
                 ServiceProvider.findOne({ businessName: req.body.businessName}, function (err,serviceProvider) {
                     if (err){
-                        res.json({ success: false, message: 'An error occurred'});
+                        res.status(500).json({ success: false, message: 'An error occurred'});
                     } else {
                         if (!serviceProvider){
-                            res.json({ success: false, message: 'User was not found.'});
+                            res.status(404).json({ success: false, message: 'User was not found.'});
                         } else {
                             const validPassword = serviceProvider.comparePassword(req.body.password);
                             if (!validPassword){
-                                res.json ({ success: false, message: 'Password was invalid' });
+                                res.status(400).json ({ success: false, message: 'Password was invalid' });
                             } else {
                                 const token = jwt.sign({ staffId: serviceProvider._id}, config.secretKey, {expiresIn: '5h'});
                                 res.json({ success: true, message: 'Success!', token: token, serviceProvider: {
