@@ -39,7 +39,7 @@ module.exports = function(router){
 
 
     // register SP api
-    router.post('api/v1/serviceProvider/signup', function (req, res) {
+    router.post('/serviceProvider/signup', function (req, res) {
         if (!req.body.businessName) {
             res.status(400).json({success: false, message: 'Business Name is required'});
         } else {
@@ -55,46 +55,46 @@ module.exports = function(router){
                         if (!req.body.phoneNumber) {
                             res.status(400).json({success: false, message: 'Phone Number is required'});
                         } else {
-                            var serviceProvider = new ServiceProvider({
-                                businessName: req.body.businessName,
-                                email: req.body.email,
-                                billingAddress: req.body.billingAddress,
-                                password: req.body.password,
-                                phoneNumber: req.body.phoneNumber
-                            });
-                            serviceProvider.save(function (err) {
-                                if (err) {
-                                    if (err.code === 11000) {
-                                        res.status(400).json({success: false, message: 'Username already exists'});
-                                    } else {
-                                        if (err.errors) {
-                                            if (err.errors.businessName) {
-                                                res.status(400).json({success: false, message: err.errors.businessName.message});
+                        var serviceProvider = new ServiceProvider({
+                            businessName: req.body.businessName,
+                            email: req.body.email,
+                            billingAddress: req.body.billingAddress,
+                            password: req.body.password,
+                            phoneNumber: req.body.phoneNumber
+                        });
+                        serviceProvider.save(function (err) {
+                            if (err) {
+                                if (err.code === 11000) {
+                                    res.status(400).json({success: false, message: 'Username already exists'});
+                                } else {
+                                    if (err.errors) {
+                                        if (err.errors.businessName) {
+                                            res.status(400).json({success: false, message: err.errors.businessName.message});
+                                        } else {
+                                            if (err.errors.password) {
+                                                res.status(400).json({success: false, message: err.errors.password.message });
                                             } else {
-                                                if (err.errors.password) {
-                                                    res.status(400).json({success: false, message: err.errors.password.message });
+                                                if (err.errors.email) {
+                                                    res.status(400).json({success: false, message: err.errors.email.message });
                                                 } else {
-                                                    if (err.errors.email) {
-                                                        res.status(400).json({success: false, message: err.errors.email.message });
+                                                    if (err.errors.phoneNumber) {
+                                                        res.status(400).json({success: false, message: err.errors.phoneNumber.message})
                                                     } else {
-                                                        if (err.errors.phoneNumber) {
-                                                            res.status(400).json({success: false, message: err.errors.phoneNumber.message})
-                                                        } else {
-                                                            res.status(400).json({success: false, message: err});
-                                                        }
+                                                        res.status(400).json({success: false, message: err});
                                                     }
                                                 }
                                             }
-
-                                        } else {
-                                            res.status(500).json({success: false, message: 'Could not create user'});
                                         }
+
+                                    } else {
+                                        res.status(500).json({success: false, message: 'Could not create user'});
                                     }
-                                } else {
-                                    res.status(200).json({success: true, message: 'Account Created'});
                                 }
-                            });
-                        }
+                            } else {
+                                res.status(200).json({success: true, message: 'Account Created'});
+                            }
+                        });
+                    }
                     }
                 }
             }
@@ -103,7 +103,7 @@ module.exports = function(router){
 
 
     // logging api functionality
-    router.post('api/v1/serviceProvider/login', function(req,res){
+    router.post('/serviceProvider/login', function(req,res){
         if (!req.body.businessName){
             res.status(400).json({ success: false, message: 'Business Name must be provided'});
         } else {
@@ -124,7 +124,7 @@ module.exports = function(router){
                                 const token = jwt.sign({ staffId: serviceProvider._id}, config.secretKey, {expiresIn: '5h'});
                                 res.status(200).json({ success: true, message: 'Success!', token: token, serviceProvider: {
                                         id: serviceProvider._id
-                                    }});
+                                }});
                             }
                         }
                     }
@@ -135,7 +135,7 @@ module.exports = function(router){
 
     //Update user information
 
-    router.put('api/v1/serviceProvider/:id', function (req, res) {
+    router.put('/serviceProvider/:id', function (req, res) {
         if (!req.body.businessName) {
             res.status(400).json({success: false, message: 'Business Name is required'});
         } else {
@@ -173,7 +173,7 @@ module.exports = function(router){
 
     //API to get a particular user
 
-    router.get('api/v1/user/:id', function (req, res) {
+    router.get('user/:id', function (req, res) {
         User.findOne({ id: req.params.id}, function (err, user) {
             if (err) {
                 res.status(500).json({success: false, message: err});
@@ -189,66 +189,66 @@ module.exports = function(router){
 
     //Create Products
 
-    router.post('api/v1/serviceProvider/products', function (req, res) {
-        if (!req.body.name) {
-            res.status(400).json({success: false, message:'Product Name is required'});
-        } else {
-            if (!req.body.price) {
-                res.status(400).json({success: false, message:'Price of the product is required'});
-            } else {
-                if (!req.body.description) {
-                    res.status(400).json({success: false, message:'Description of the product is required'});
-                } else {
-                    if (!req.body.quantity){
-                        res.status(400).json({success: false, message:'Quantity of available product is required'});
-                    } else {
-                        if (!req.body.productCategory) {
-                            res.status(400).json({success: false, message:'Product Category is required'});
-                        } else {
+    router.post('/serviceProvider/products', function (req, res) {
+       if (!req.body.name) {
+           res.status(400).json({success: false, message:'Product Name is required'});
+       } else {
+           if (!req.body.price) {
+               res.status(400).json({success: false, message:'Price of the product is required'});
+           } else {
+               if (!req.body.description) {
+                   res.status(400).json({success: false, message:'Description of the product is required'});
+               } else {
+                   if (!req.body.quantity){
+                       res.status(400).json({success: false, message:'Quantity of available product is required'});
+                   } else {
+                       if (!req.body.productCategory) {
+                           res.status(400).json({success: false, message:'Product Category is required'});
+                       } else {
 
-                            /*
-                                                       var imagePath = '';
+/*
+                           var imagePath = '';
 
-                                                       upload(req, res, function (err) {
-                                                           if (err) {
-                                                               // An error occurred when uploading
-                                                               console.log(err);
-                                                               return res.status(422).send("an Error occured");
-                                                           }*/
-                            // imagePath = req.file.filename;
+                           upload(req, res, function (err) {
+                               if (err) {
+                                   // An error occurred when uploading
+                                   console.log(err);
+                                   return res.status(422).send("an Error occured");
+                               }*/
+                               // imagePath = req.file.filename;
 
 
-                            let product = new Products({
-                                name: req.body.name,
-                                price: req.body.price,
-                                description: req.body.description,
-                                productCode: randomstring.generate(10),
-                                imageUrl: req.body.url,
-                                quantity: req.body.quantity,
-                                productCategory: req.body.productCategory,
-                                createdAt: Date.now(),
-                                updatedAt: Date.now()
-                            });
-                            product.save(function (err) {
-                                if (err) {
-                                    res.status(500).json({success: false, message: 'An error occurred', error: err});
-                                } else {
-                                    res.status(200).json({success: true, message: 'Product has been created'});
-                                }
-                            });
-                            // });
-                        }
+                               let product = new Products({
+                                   name: req.body.name,
+                                   price: req.body.price,
+                                   description: req.body.description,
+                                   productCode: randomstring.generate(10),
+                                   imageUrl: req.body.url,
+                                   quantity: req.body.quantity,
+                                   productCategory: req.body.productCategory,
+                                   createdAt: Date.now(),
+                                   updatedAt: Date.now()
+                               });
+                               product.save(function (err) {
+                                   if (err) {
+                                       res.status(500).json({success: false, message: 'An error occurred', error: err});
+                                   } else {
+                                       res.status(200).json({success: true, message: 'Product has been created'});
+                                   }
+                               });
+                           // });
+                       }
 
-                    }
-                }
-            }
-        }
+                   }
+               }
+           }
+       }
     });
 
 
     //Update Product
 
-    router.put('api/v1/serviceProvider/products/:id', function (req, res) {
+    router.put('/serviceProvider/products/:id', function (req, res) {
         if (!req.body.name) {
             res.status(400).json({success: false, message:'Product Name is required'});
         } else {
@@ -275,23 +275,23 @@ module.exports = function(router){
                                 }
                                 imagePath = req.file.filename;*/
 
-                            Products.findByIdAndUpdate(req.params.id, {
-                                name: req.body.name,
-                                price: req.body.price,
-                                description: req.body.description,
-                                productCode: randomstring.generate(10),
-                                imageUrl: req.body.url,
-                                quantity: req.body.quantity,
-                                productCategory: req.body.productCategory,
-                                // createdAt: Date.now(),
-                                updatedAt: Date.now()
-                            }, function (err) {
-                                if (err) {
-                                    res.status(500).json({success: false, message: 'Product could not be updated'});
-                                } else {
-                                    res.status(200).json({success: true, message: 'Product has been updated'});
-                                }
-                            });
+                                Products.findByIdAndUpdate(req.params.id, {
+                                    name: req.body.name,
+                                    price: req.body.price,
+                                    description: req.body.description,
+                                    productCode: randomstring.generate(10),
+                                    imageUrl: req.body.url,
+                                    quantity: req.body.quantity,
+                                    productCategory: req.body.productCategory,
+                                    // createdAt: Date.now(),
+                                    updatedAt: Date.now()
+                                }, function (err) {
+                                    if (err) {
+                                        res.status(500).json({success: false, message: 'Product could not be updated'});
+                                    } else {
+                                        res.status(200).json({success: true, message: 'Product has been updated'});
+                                    }
+                                });
                             // });
                         }
 
@@ -302,14 +302,14 @@ module.exports = function(router){
     });
 
     //Delete product
-    router.delete('api/v1/serviceProvider/products/:id', function (req,res) {
-        Products.findByIdAndRemove({_id: req.params.id}).then(function (done) {
-            if(done){
-                res.status(200).json({success: true, message: 'Product was successfully deleted'});
-            }  else {
-                res.status(500).json({success: false, message:'An error occurred. Try again later.'});
-            }
-        });
+    router.delete('/serviceProvider/products/:id', function (req,res) {
+       Products.findByIdAndRemove({_id: req.params.id}).then(function (done) {
+         if(done){
+             res.status(200).json({success: true, message: 'Product was successfully deleted'});
+         }  else {
+             res.status(500).json({success: false, message:'An error occurred. Try again later.'});
+         }
+       });
     });
 
     return router;

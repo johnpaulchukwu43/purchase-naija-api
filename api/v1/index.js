@@ -13,6 +13,7 @@ const router = express.Router();
 var user = require('./routes/customer')(router);
 var admin = require('./routes/admin')(router);
 var serviceProvider = require('./routes/serviceProvider')(router);
+let base_path = '/api/v1';
 
 // var userRoutes = require('./routes/user')(router);
 // var ejsMate = require('ejs-mate');
@@ -40,9 +41,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded( { extended: true }));
 
 
-app.use(user);
-app.use(admin);
-app.use(serviceProvider);
+app.use(base_path,user);
+app.use(base_path,admin);
+app.use(base_path,serviceProvider);
 
 app.listen(secret.port, function (err) {
     if (err) throw err;
