@@ -9,7 +9,7 @@ const jwt = require('jsonwebtoken');
 module.exports = function(router){
 
     // register api
-    router.post('api/v1/user/signup', function (req, res) {
+    router.post('/user/signup', function (req, res) {
         if (!req.body.email) {
             res.status(400).json({success: false, message: 'Email is required'});
         } else {
@@ -81,7 +81,7 @@ module.exports = function(router){
 
 
     // logging api functionality
-    router.post('api/v1/user/login', function(req,res){
+    router.post('/user/login', function(req,res){
         if (!req.body.email){
             res.status(400).json({ success: false, message: 'Email must be provided'});
         } else {
@@ -114,7 +114,7 @@ module.exports = function(router){
 
     //Customer update information functionality
 
-    router.put('api/v1/user/update/:id', function (req, res) {
+    router.put('/user/update/:id', function (req, res) {
         if (!req.body.email) {
             res.status(400).json({success: false, message: 'Email is required'});
         } else {
@@ -163,7 +163,7 @@ module.exports = function(router){
     });
 
     // searching for products based on category
-    router.get('api/v1/products/search/:productCategory', function (req,res) {
+    router.get('/products/search/:productCategory', function (req,res) {
         Products.find({ productCategory: req.params.productCategory }, function (err, products) {
             if(err){
                 res.status(400).json({ success: false, message: err });
@@ -183,7 +183,7 @@ module.exports = function(router){
     });
 
 // searching for service provider based on category and date
-    router.get('api/v1/products/search/:productCategory?/:date?', function (req,res) {
+    router.get('/products/search/:productCategory?/:date?', function (req,res) {
         Products.find({ productCategory: req.query.productCategory, date: req.query.date }, function (err, products) {
             if(err){
                 res.status(500).json({ success: false, message: err });
@@ -203,7 +203,7 @@ module.exports = function(router){
     });
 
     //Endpoint to get all products
-    router.get('api/v1/products', function (req,res) {
+    router.get('/products', function (req,res) {
        Products.find({}, function (err, products) {
            if (err) {
                res.status(400).json({success: false, message: err});
@@ -225,7 +225,7 @@ module.exports = function(router){
 
     //Endpoint to Get a particular product by ID
 
-    router.get('api/v1/products/:id', function (req,res) {
+    router.get('/products/:id', function (req,res) {
         Products.find({ _id: req.params.id}, function (err, products) {
             if (err) {
                 res.status(500).json({success: false, message: err});
@@ -245,7 +245,7 @@ module.exports = function(router){
     });
 
     //Endpoint to Get a particular product by productName
-    router.get('api/v1/product/search/:name?', function (req,res) {
+    router.get('/product/search/:name?', function (req,res) {
         var pname = req.query.name;
         Products.find({name: pname}, function (err, products) {
             if (err) {
@@ -268,7 +268,7 @@ module.exports = function(router){
     });
 
     //Endpoint to add User Cart
-    router.post('api/v1/userCart/:userEmail?/:productID?', function (req, res) {
+    router.post('/userCart/:userEmail?/:productID?', function (req, res) {
         var status = "PENDING";
         var userCart = new UserCart({
             userEmail: req.query.userEmail,
@@ -289,7 +289,7 @@ module.exports = function(router){
 
     // Using productID you can get the product itself by using the get product using ID end point
 
-    router.get('api/v1/userCart/:userEmail', function (req,res) {
+    router.get('/userCart/:userEmail', function (req,res) {
        UserCart.find({userEmail: req.params.userEmail}, function (err, userCart) {
            if (err) {
                res.status(400).json({success: false, message: err});
@@ -312,7 +312,7 @@ module.exports = function(router){
 
     //Endpoint to Update User cart
 
-    router.put('api/v1/userCart/:userEmail?/:productID?', function (req, res) {
+    router.put('/userCart/:userEmail?/:productID?', function (req, res) {
         UserCart.findOne({userEmail: req.query.userEmail, productID:req.query.productID}, function (err,cart) {
             if(err) {
                 res.status(500).json({success: false, message: err});
@@ -336,7 +336,7 @@ module.exports = function(router){
 
     //Endpoint to Delete a userCart
 
-    router.delete('api/v1/userCart/:userEmail?/:productID?', function (req,res) {
+    router.delete('/userCart/:userEmail?/:productID?', function (req,res) {
         UserCart.findOne({userEmail: req.query.userEmail, productID:req.query.productID}, function (err,cart) {
             if(err) {
                 res.status(500).json({success: false, message: err});
@@ -356,7 +356,7 @@ module.exports = function(router){
 
     //Create comment by user Endpoint
 
-    router.post('api/v1/review/:userEmail', function (req, res) {
+    router.post('/review/:userEmail', function (req, res) {
        if(!req.body.productID) {
             res.status(400).json({success: false, message: 'Product ID is required'});
        } else {
@@ -387,7 +387,7 @@ module.exports = function(router){
 
 
     //Endpoint to get reviews for a product
-    router.get('api/v1/review/:productID', function(req, res) {
+    router.get('/review/:productID', function(req, res) {
         Review.find({productID: req.params.productID}, function (err, review) {
             if (err){
                 res.status(500).json({success:false, message: err});
@@ -402,7 +402,7 @@ module.exports = function(router){
     });
 
     //  Endpoint to get reviews for a single user
-    router.get('api/v1/getreview/:userEmail', function(req, res) {
+    router.get('/getreview/:userEmail', function(req, res) {
         Review.find({userEmail: req.params.userEmail}, function (err, review) {
             if (err){
                 res.status(500).json({success:false, message: err});
@@ -434,7 +434,7 @@ module.exports = function(router){
 
     //Endpoint to get a particular user
 
-    router.get('api/v1/user/:id', function (req, res) {
+    router.get('/user/:id', function (req, res) {
         User.findOne({ id: req.params.id}, function (err, user) {
             if (err) {
                 res.status(500).json({success: false, message: err});

@@ -40,7 +40,7 @@ var upload = multer({ storage: storage }).single('file');
 module.exports = function(router){
 
     // register admin api
-    router.post('api/v1/admin/signup', function (req, res) {
+    router.post('/admin/signup', function (req, res) {
         if (!req.body.username) {
             res.status(400).json({success: false, message: 'Username is required'});
         } else {
@@ -83,7 +83,7 @@ module.exports = function(router){
     });
 
     // logging api functionality
-    router.post('api/v1/admin/login', function(req,res){
+    router.post('/admin/login', function(req,res){
         if (!req.body.username){
             res.status(400).json({ success: false, message: 'Username must be provided'});
         } else {
@@ -116,7 +116,7 @@ module.exports = function(router){
 
 
     // register staff api
-    router.post('api/v1/admin/registerStaff', function (req, res) {
+    router.post('/admin/registerStaff', function (req, res) {
         if (!req.body.username) {
             res.status(400).json({success: false, message: 'Username is required'});
         } else {
@@ -160,7 +160,7 @@ module.exports = function(router){
 
     //API to get a particular user
 
-    router.get('api/v1/user/:id', function (req, res) {
+    router.get('/user/:id', function (req, res) {
        User.findOne({ id: req.params.id}, function (err, user) {
            if (err) {
                res.status(500).json({success: false, message: err});
@@ -287,7 +287,7 @@ module.exports = function(router){
     });*/
 
     //Delete product
-    router.delete('api/v1/serviceProvider/products/:id', function (req,res) {
+    router.delete('/serviceProvider/products/:id', function (req,res) {
         Products.findByIdAndRemove({_id: req.params.id}).then(function (done) {
             if(done){
                 res.status(200).json({success: true, message: 'Product was successfully deleted'});

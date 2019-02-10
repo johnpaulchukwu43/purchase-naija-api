@@ -39,7 +39,7 @@ module.exports = function(router){
 
 
     // register SP api
-    router.post('api/v1/serviceProvider/signup', function (req, res) {
+    router.post('/serviceProvider/signup', function (req, res) {
         if (!req.body.businessName) {
             res.status(400).json({success: false, message: 'Business Name is required'});
         } else {
@@ -103,7 +103,7 @@ module.exports = function(router){
 
 
     // logging api functionality
-    router.post('api/v1/serviceProvider/login', function(req,res){
+    router.post('/serviceProvider/login', function(req,res){
         if (!req.body.businessName){
             res.status(400).json({ success: false, message: 'Business Name must be provided'});
         } else {
@@ -135,7 +135,7 @@ module.exports = function(router){
 
     //Update user information
 
-    router.put('api/v1/serviceProvider/:id', function (req, res) {
+    router.put('/serviceProvider/:id', function (req, res) {
         if (!req.body.businessName) {
             res.status(400).json({success: false, message: 'Business Name is required'});
         } else {
@@ -173,7 +173,7 @@ module.exports = function(router){
 
     //API to get a particular user
 
-    router.get('api/v1/user/:id', function (req, res) {
+    router.get('user/:id', function (req, res) {
         User.findOne({ id: req.params.id}, function (err, user) {
             if (err) {
                 res.status(500).json({success: false, message: err});
@@ -189,7 +189,7 @@ module.exports = function(router){
 
     //Create Products
 
-    router.post('api/v1/serviceProvider/products', function (req, res) {
+    router.post('/serviceProvider/products', function (req, res) {
        if (!req.body.name) {
            res.status(400).json({success: false, message:'Product Name is required'});
        } else {
@@ -248,7 +248,7 @@ module.exports = function(router){
 
     //Update Product
 
-    router.put('api/v1/serviceProvider/products/:id', function (req, res) {
+    router.put('/serviceProvider/products/:id', function (req, res) {
         if (!req.body.name) {
             res.status(400).json({success: false, message:'Product Name is required'});
         } else {
@@ -302,7 +302,7 @@ module.exports = function(router){
     });
 
     //Delete product
-    router.delete('api/v1/serviceProvider/products/:id', function (req,res) {
+    router.delete('/serviceProvider/products/:id', function (req,res) {
        Products.findByIdAndRemove({_id: req.params.id}).then(function (done) {
          if(done){
              res.status(200).json({success: true, message: 'Product was successfully deleted'});
