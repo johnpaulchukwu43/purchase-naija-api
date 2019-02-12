@@ -3,3 +3,4 @@ api/v1/package-lock.json
 .idea
 .idea/*
 app/
+.env
