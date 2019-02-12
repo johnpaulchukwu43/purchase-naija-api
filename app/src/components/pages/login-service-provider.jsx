@@ -16,7 +16,7 @@ class LoginServiceProvider extends Component {
             businessName: '',
             password: '',
             errors: {},
-            isLoading: false
+            isLoading: false,
         };
 
         this.onSubmit = this.onSubmit.bind(this);
@@ -60,16 +60,18 @@ class LoginServiceProvider extends Component {
         if (this.isValid()) {
             this.setState({errors: {}, isLoading: true});
             let requestBody = {"businessName": this.state.businessName, "password": this.state.password};
-            this.props.loginServiceProviderRequest(requestBody);
-            let response = this.props.response;
-            console.log(JSON.stringify(response.error.message));
-            this.setState({errors: response.error.message, isLoading: false});
-            if (response.error) {
-                toast.error(response.error.message);
-            } else {
+            this.props.loginServiceProviderRequest(requestBody).then(res=>{
                 //todo handle proper routing after successful login
-                this.context.router.history.push('/');
-            }
+                this.setState({ isLoading: false});
+                let response = this.props.response;
+                if (response.error) {
+                    toast.error(response.error.message);
+                }else{
+                    toast.info("Welcome");
+                    this.context.router.history.push('/');
+                }
+            }).catch((err)=>{
+            })
         }
     }
 

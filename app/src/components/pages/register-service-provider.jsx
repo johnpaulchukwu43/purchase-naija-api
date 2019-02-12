@@ -42,24 +42,29 @@ class RegisterServiceProvider extends Component {
             "billingAddress": this.state.billingAddress_value,
             "phoneNumber": this.state.phoneNumber_value,
         };
-        this.props.SignUpServiceProviderRequest(requestBody);
-        this.setState({ isLoading: false});
-        let response = this.props.response;
-        console.log(response);
-        if(response.error){
-            toast.error(response.error.message)
-        }else{
-
-            toast.info('Successfully Created Service Provider Account', {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true
-            });
-            this.context.router.history.push('/');
-        }
+        this.props.SignUpServiceProviderRequest(requestBody).then(res=>{
+            //todo handle proper routing after successful login
+            this.setState({ isLoading: false});
+            let response = this.props.response;
+            if (response.error) {
+                toast.error(response.error.message);
+            }else{
+                toast.info('Successfully Created Service Provider Account. Login with Credentials', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true
+                });
+            }
+        }).catch((err)=>{
+            this.setState({ isLoading: false});
+            let response = this.props.response;
+            if (response.error) {
+                toast.error(response.error.message);
+            }
+        });
     }
 
     onChange(e) {

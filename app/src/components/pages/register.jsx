@@ -34,25 +34,27 @@ class Register extends Component {
         let requestBody = {
             "email": this.state.email_value,
             "password": this.state.password_value,
-            "firstName": this.state.firstName_value,
-            "lastName": this.state.lastName_value
+            "firstname": this.state.firstName_value,
+            "lastname": this.state.lastName_value
         };
         console.log(JSON.stringify(requestBody));
-        this.props.userSignupRequest(requestBody).then(
-            () => {
-                this.setState({ isLoading: false});
-                toast.info('Successfully Created Account', {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true
-                });
+        this.props.userSignupRequest(requestBody).then(res=>{
+            //todo handle proper routing after successful login
+            this.setState({ isLoading: false});
+            let response = this.props.response;
+            if (response.error) {
+                toast.error(response.error.message);
+            }else{
+                toast.info("Welcome");
                 this.context.router.history.push('/');
-            },
-            (err) => this.setState({errors: err.response.data, isLoading: false})
-        );
+            }
+        }).catch((err)=>{
+            this.setState({ isLoading: false});
+            let response = this.props.response;
+            if (response.error) {
+                toast.error(response.error.message);
+            }
+        });
 
         console.log(JSON.stringify(this.state))
     }
@@ -148,6 +150,12 @@ Register.propTypes = {
 Register.contextTypes = {
     router: PropTypes.object.isRequired
 };
+const mapStateToProps = (state) => {
+    return {
+        response: state.auth
+    };
+};
 
 
-export default connect(null, {userSignupRequest})(Register);
+
+export default connect(mapStateToProps, {userSignupRequest})(Register);

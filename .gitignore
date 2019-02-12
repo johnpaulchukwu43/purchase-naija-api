@@ -2,4 +2,4 @@ api/v1/node_modules/
 api/v1/package-lock.json
 .idea
 .idea/*
-app/
+app/node_modules/

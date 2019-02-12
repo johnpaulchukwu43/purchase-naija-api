@@ -41,9 +41,22 @@ class Login extends Component {
         if (this.isValid()) {
             this.setState({ errors: {}, isLoading: true });
             let requestBody = {"email":this.state.email,"password":this.state.password};
-            this.props.login(requestBody).then(
-                (res) => this.context.router.history.push('/')
-            ).catch( (err) => toast.error(err));
+            this.props.login(requestBody).then(res=>{
+                //todo handle proper routing after successful login
+                this.setState({ isLoading: false});
+                let response = this.props.response;
+                if (response.error) {
+                    toast.error(response.error.message);
+                }else{
+                    toast.info("Welcome");
+                    this.context.router.history.push('/');
+                }
+            }).catch((err)=>{
+                let response = this.props.response;
+                if (response.error) {
+                    toast.error(response.error.message);
+                }
+            })
         }
     }
 
@@ -114,5 +127,10 @@ Login.propTypes = {
 Login.contextTypes = {
     router: PropTypes.object.isRequired
 };
+const mapStateToProps = (state) => {
+    return {
+        response: state.auth
+    };
+};
 
-export default connect(null, { login })(Login);
+export default connect(mapStateToProps, { login })(Login);
