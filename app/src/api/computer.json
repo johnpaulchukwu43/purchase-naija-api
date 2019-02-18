@@ -1,0 +1,23 @@
+{
+  "computer": [
+    {
+      "createdAt": "Sun Feb 17 2019 21:54:12 GMT+0100 (West Africa Standard Time)",
+      "updatedAt": "Sun Feb 17 2019 21:54:12 GMT+0100 (West Africa Standard Time)",
+      "_id": "5c69c9f46e078200514e1897",
+      "name": "Jik",
+      "price": "4000",
+      "description": "vjdncasjkdncasjcnkdjasnjkdnjckaznjasnkjdcnajvcnakjsnvjsdnvjfnsdkjvnadfjvnasdjnvskjadfnjkvdfnsjkfvdsnkjdnkj",
+      "productCode": "lsPu8f32uo",
+      "imageUrl": "akdncasjkcnajskcnjaknd",
+      "quantity": "2",
+      "productCategory": "computer",
+      "color": "black",
+      "OS": "more manufacturing",
+      "Screen": "ajncajs",
+      "Ram": "male",
+      "Processor": "dhjshd",
+      "MemorySpace": "kjdjkajd",
+      "__v": 0
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "beauty": [
+    {
+      "createdAt": "Sun Feb 17 2019 21:20:35 GMT+0100 (West Africa Standard Time)",
+      "updatedAt": "Sun Feb 17 2019 21:20:35 GMT+0100 (West Africa Standard Time)",
+      "_id": "5c69c2138a880ddd855c17c2",
+      "name": "Jik",
+      "price": "4000",
+      "description": "vjdncasjkdncasjcnkdjasnjkdnjckaznjasnkjdcnajvcnakjsnvjsdnvjfnsdkjvnadfjvnasdjnvskjadfnjkvdfnsjkfvdsnkjdnkj",
+      "productCode": "jdHGKrbLDu",
+      "imageUrl": "akdncasjkcnajskcnjaknd",
+      "quantity": "2",
+      "productCategory": "beauty",
+      "color": "black",
+      "brand": "ajncajs",
+      "gender": "male",
+      "SubCategory": "more manufacturing",
+      "__v": 0
+    }
+
+  ]
+}

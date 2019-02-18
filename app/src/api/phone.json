@@ -1,0 +1,26 @@
+{
+  "phone": [
+    {
+      "createdAt": "Sun Feb 17 2019 21:58:11 GMT+0100 (West Africa Standard Time)",
+      "updatedAt": "Sun Feb 17 2019 21:58:11 GMT+0100 (West Africa Standard Time)",
+      "_id": "5c69cae36e078200514e1899",
+      "name": "Jik",
+      "price": "4000",
+      "provider":"purchaseNaija",
+      "description": "vjdncasjkdncasjcnkdjasnjkdnjckaznjasnkjdcnajvcnakjsnvjsdnvjfnsdkjvnadfjvnasdjnvskjadfnjkvdfnsjkfvdsnkjdnkj",
+      "productCode": "VTYrgQqgM3",
+      "imageUrl": "akdncasjkcnajskcnjaknd",
+      "quantity": "2",
+      "productCategory": "phone",
+      "color": "black",
+      "Brand": "apple",
+      "ScreenSize": "ajncajs",
+      "CameraQuality": "sjdks",
+      "Ram": "male",
+      "BatteryPower": "32",
+      "InternalMemory": "kadjask",
+      "SimSlotNumber": "jajdk",
+      "__v": 0
+    }
+  ],
+}

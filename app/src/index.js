@@ -14,11 +14,21 @@ import Fashion from './components/layouts/fashion';
 import Index from './components/layouts/index';
 import jwtDecode from 'jwt-decode';
 
+//Category imports
+import PhonesCategory from './components/categories/Phones'
+import RawMaterialsCategory from './components/categories/raw_materials'
+import ManufactruingCategory from './components/categories/manufacturing'
+import FashionCategory from './components/products/fashion'
+import ElectronicsCategory from './components/categories/electronics'
+import ComputerCategory from './components/categories/computer'
+import BeautyCategory from './components/categories/beauty'
+
+
 
 //Collection Pages
-import CollectionLeftSidebar from "./components/collection/collection-left-sidebar";
-import CollectionNoSidebar from "./components/collection/collection-no-sidebar";
-import CollectionRightSidebar from "./components/collection/collection-right-sidebar";
+import CollectionLeftSidebar from "./components/categories/collection-left-sidebar";
+import CollectionNoSidebar from "./components/categories/collection-no-sidebar";
+import CollectionRightSidebar from "./components/categories/collection-right-sidebar";
 
 // Product Pages
 import LeftSideBar from "./components/products/left-sidebar";
@@ -61,6 +71,7 @@ import Details from './components/blogs/details'
 import BlogPage from './components/blogs/blog-page'
 import setAuthorizationToken from "./utils/setAuthorizationToken";
 import {setCurrentUser} from "./actions/AuthActions";
+import Phones from "./components/categories/Phones";
 
 
 
@@ -84,8 +95,21 @@ class Root extends React.Component {
                         <Layout>
                             <Switch>
 								<Route exact path={`${process.env.PUBLIC_URL}/`} component={Index}/>
+                                {/*Product Categories*/}
+                                <Route path={`${process.env.PUBLIC_URL}/product/category/devices`} component={Phones}/>
+                                <Route path={`${process.env.PUBLIC_URL}/product/category/manufacturing`} component={ManufactruingCategory}/>
+                                <Route path={`${process.env.PUBLIC_URL}/product/category/fashion`} component={FashionCategory}/>
+                                <Route path={`${process.env.PUBLIC_URL}/product/category/computers`} component={ComputerCategory}/>
+                                <Route path={`${process.env.PUBLIC_URL}/product/category/raw_materials`} component={RawMaterialsCategory}/>
+                                <Route path={`${process.env.PUBLIC_URL}/product/category/beauty_products`} component={BeautyCategory}/>
+                                <Route path={`${process.env.PUBLIC_URL}/product/category/electronics`} component={ElectronicsCategory}/>
 
-								{/*Routes For Features (Product Collection) */}
+
+                                {/*Fashion*/}
+                                <Route path={`${process.env.PUBLIC_URL}/fashion`} component={Fashion}/>
+
+
+                                {/*Routes For Features (Product Collection) */}
 								<Route path={`${process.env.PUBLIC_URL}/left-sidebar/collection`} component={CollectionLeftSidebar}/>
 								<Route path={`${process.env.PUBLIC_URL}/no-sidebar/collection`} component={CollectionNoSidebar}/>
 								<Route path={`${process.env.PUBLIC_URL}/right-sidebar/collection`} component={CollectionRightSidebar}/>

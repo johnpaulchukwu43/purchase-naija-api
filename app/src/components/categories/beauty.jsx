@@ -1,18 +1,24 @@
 import React, {Component} from 'react';
-import Breadcrumb from "../common/breadcrumb";
+import Slider from 'react-slick';
+import '../common/index.scss';
+import {connect} from "react-redux";
+
+// import custom Components
 import NewProduct from "../common/new-product";
+import Breadcrumb from "../common/breadcrumb";
+import StickyBox from "react-sticky-box";
 import Filter from "./common/filter";
 import FilterBar from "./common/filter-bar";
 import ProductListing from "./common/product-listing";
-import StickyBox from "react-sticky-box";
 
-class CollectionLeftSidebar extends Component {
+
+class BeautyCategory extends Component {
 
     openFilter = () => {
-        document.querySelector(".collection-filter").style = "left: -15px";
+        document.querySelector(".categories-filter").style = "left: -15px";
     }
-    
-    render (){
+
+    render() {
         return (
             <div>
 
@@ -30,7 +36,8 @@ class CollectionLeftSidebar extends Component {
                                             <NewProduct/>
                                             <div className="collection-sidebar-banner">
                                                 <a href="#">
-                                                    <img src={`${process.env.PUBLIC_URL}/assets/images/side-banner.png`} className="img-fluid" alt="" />
+                                                    <img src={`${process.env.PUBLIC_URL}/assets/images/side-banner.png`}
+                                                         className="img-fluid" alt=""/>
                                                 </a>
                                             </div>
                                         </div>
@@ -43,11 +50,24 @@ class CollectionLeftSidebar extends Component {
                                             <div className="row">
                                                 <div className="col-sm-12">
                                                     <div className="top-banner-wrapper">
-                                                        <a href="#"><img src={`${process.env.PUBLIC_URL}/assets/images/mega-menu/2.jpg`} className="img-fluid" alt=""/></a>
+                                                        <a href="#"><img
+                                                            src={`${process.env.PUBLIC_URL}/assets/images/mega-menu/2.jpg`}
+                                                            className="img-fluid" alt=""/></a>
                                                         <div className="top-banner-content small-section">
                                                             <h4>fashion</h4>
-                                                            <h5>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</h5>
-                                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. </p>
+                                                            <h5>Lorem Ipsum is simply dummy text of the printing and
+                                                                typesetting industry.</h5>
+                                                            <p>Lorem Ipsum is simply dummy text of the printing and
+                                                                typesetting industry. Lorem Ipsum has been the
+                                                                industry's standard dummy text ever since the 1500s,
+                                                                when an unknown printer took a galley of type and
+                                                                scrambled it to make a type specimen book. It has
+                                                                survived not only five centuries, but also the leap into
+                                                                electronic typesetting, remaining essentially unchanged.
+                                                                It was popularised in the 1960s with the release of
+                                                                Letraset sheets containing Lorem Ipsum passages, and
+                                                                more recently with desktop publishing software like
+                                                                Aldus PageMaker including versions of Lorem Ipsum. </p>
                                                         </div>
                                                     </div>
                                                     <div className="collection-product-wrapper">
@@ -57,7 +77,7 @@ class CollectionLeftSidebar extends Component {
                                                                     <div className="col-xl-12">
                                                                         <div className="filter-main-btn">
                                                                             <span onClick={this.openFilter}
-                                                                                className="filter-btn btn btn-theme"><i
+                                                                                  className="filter-btn btn btn-theme"><i
                                                                                 className="fa fa-filter"
                                                                                 aria-hidden="true"></i> Filter</span>
                                                                         </div>
@@ -89,5 +109,4 @@ class CollectionLeftSidebar extends Component {
         )
     }
 }
-
-export default CollectionLeftSidebar;
+export default BeautyCategory

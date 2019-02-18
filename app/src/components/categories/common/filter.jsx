@@ -19,7 +19,7 @@ class Filter extends Component {
     }
 
     closeFilter = () => {
-        document.querySelector(".collection-filter").style = "left: -365px";
+        document.querySelector(".categories-filter").style = "left: -365px";
     }
 
     clickBrandHendle(event, brands) {

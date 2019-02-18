@@ -10,7 +10,7 @@ import StickyBox from "react-sticky-box";
 class CollectionRightSidebar extends Component {
 
     openFilter = () => {
-        document.querySelector(".collection-filter").style = "left: -15px";
+        document.querySelector(".categories-filter").style = "left: -15px";
     }
     
     render (){

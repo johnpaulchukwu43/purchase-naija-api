@@ -7,7 +7,7 @@ class FilterBar extends Component {
 
     //List Layout View
     listLayout(){
-        document.querySelector(".collection-grid-view").style = "opacity:0";
+        document.querySelector(".categories-grid-view").style = "opacity:0";
         document.querySelector(".product-wrapper-grid").style = "opacity:0.2";
         document.querySelector(".product-wrapper-grid").classList.add("list-view");
         var elems = document.querySelector(".infinite-scroll-component .row").childNodes;
@@ -22,7 +22,7 @@ class FilterBar extends Component {
 
     //Grid Layout View
     gridLayout(){
-        document.querySelector(".collection-grid-view").style = "opacity:1";
+        document.querySelector(".categories-grid-view").style = "opacity:1";
         document.querySelector(".product-wrapper-grid").classList.remove("list-view");
         var elems = document.querySelector(".infinite-scroll-component .row").childNodes;
         [].forEach.call(elems, function(el) {

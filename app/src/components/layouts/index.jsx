@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import Slider from 'react-slick';
 
 import '../common/index.scss';
+import LatestCollection from "../categories/LatestCollection";
 
 const Content = props => {
 
@@ -22,10 +23,10 @@ const Content = props => {
         <div className="row">
 
             {/*<div className="col-sm-12 col-lg-3">*/}
-                {/*/!*Home Slider*!/*/}
-                {/*<div className="container">*/}
-                {/*</div>*/}
-                {/*/!*Home Section End*!/*/}
+            {/*/!*Home Slider*!/*/}
+            {/*<div className="container">*/}
+            {/*</div>*/}
+            {/*/!*Home Section End*!/*/}
             {/*</div>*/}
             <div className="col-sm-12 col-lg-12">
                 <div className="container">
@@ -113,8 +114,13 @@ const Content = props => {
         {/*sponsrs*/}
 
         {/*Categories*/}
+
         <section className="flat-row row-image-box">
             <div className="container">
+                <div className="title1  section-t-space">
+
+                    <h2 className="title-inner1"> Product Categories</h2>
+                </div>
                 <div className="row gutter-10">
                     <div className="col-sm-6 col-md-4">
                         <div className="flat-image-box style-1 data-effect div-h22 clearfix">
@@ -277,8 +283,16 @@ const Content = props => {
                 </div>
             </div>
         </section>
-
         {/*Categories*/}
+
+        {/*Latest Collection*/}
+        <LatestCollection/>
+        {/*Latest Collection End*/}
+
+
+
+
+
 
     </div>;
 };
