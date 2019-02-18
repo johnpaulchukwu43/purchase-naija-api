@@ -1,57 +1,16 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import { withTranslate } from 'react-redux-multilingual'
-import { logout } from '../../../../actions/AuthActions';
 import PropTypes from 'prop-types';
 import {connect} from "react-redux";
 
 
 class TopBar extends Component {
 
-    logout(e) {
-        e.preventDefault();
-        this.props.logout();
-        this.context.router.history.push('/');
-    }
+
 
     render() {
-        const { isAuthenticated } = this.props.auth;
         const {translate} = this.props;
-
-        const guestLinks = (
-            <li className="onhover-dropdown mobile-account">
-                Register
-                <ul className="onhover-show-div">
-                    <li>
-                        <Link to={`${process.env.PUBLIC_URL}/pages/user/register`} data-lng="en">
-                            <i className="fa fa-user" aria-hidden="true"></i>
-                            Shop on Purchase Naija
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to={`${process.env.PUBLIC_URL}/pages/service-provider/register`} data-lng="en">
-                            <i className="fa fa-user" aria-hidden="true"></i>
-                            Become a Seller
-                        </Link>
-                    </li>
-                </ul>
-            </li>
-
-        );
-
-        const userLinks = (
-            <li className="onhover-dropdown mobile-account">
-                    Account
-                <ul className="onhover-show-div">
-                    <li>
-                        <Link to={`${process.env.PUBLIC_URL}/pages/user/login`} data-lng="en">DashBoard</Link>
-                    </li>
-                    <li>
-                        <a href="#" onClick={this.logout.bind(this)}>Logout</a>
-                    </li>
-                </ul>
-            </li>
-        );
         return (
             <div className="top-header">
                 <div className="container">
@@ -68,16 +27,7 @@ class TopBar extends Component {
                             <ul className="header-dropdown">
                                 <li className="mobile-wishlist compare-mobile"><Link to={`${process.env.PUBLIC_URL}/compare`}><i className="fa fa-random" aria-hidden="true"></i>{translate('compare')}</Link></li>
                                 <li className="mobile-wishlist"><Link to={`${process.env.PUBLIC_URL}/wishlist`}><i className="fa fa-heart" aria-hidden="true"></i>{translate('wishlist')}</Link></li>
-                                { isAuthenticated ? userLinks : guestLinks }
-                                {
-                                    !isAuthenticated &&
-                                    <li className="onhover-dropdown mobile-account">
-                                        <Link to={`${process.env.PUBLIC_URL}/pages/service-provider/login`} data-lng="en">
-                                            <i className="fa fa-user-circle" aria-hidden="true"></i>Login
-                                        </Link>
-                                    </li>
 
-                                }
                             </ul>
                         </div>
                     </div>
@@ -87,10 +37,6 @@ class TopBar extends Component {
     }
 }
 
-TopBar.propTypes = {
-    auth: PropTypes.object.isRequired,
-    logout: PropTypes.func.isRequired
-};
 
 TopBar.contextTypes = {
     router: PropTypes.object.isRequired
@@ -103,4 +49,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps, { logout })(withTranslate(TopBar));
+export default connect(mapStateToProps)(withTranslate(TopBar));

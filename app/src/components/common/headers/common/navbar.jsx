@@ -4,6 +4,7 @@ import $ from 'jquery';
 import 'smartmenus';
 import { withTranslate } from 'react-redux-multilingual'
 
+
 class NavBar extends Component {
     constructor(props){
         super(props);
@@ -40,21 +41,22 @@ class NavBar extends Component {
         return (
             <div>
                 <nav id="main-nav">
+
                     <div className="toggle-nav" onClick={this.openNav.bind(this)}>
                         <i className="fa fa-bars sidebar-bar" ></i>
                     </div>
                     {/*Horizontal menu*/}
-                    <ul id="main-menu" className="sm pixelstrap sm-horizontal" style={this.state.navClose}>
-                        <li >
-                            <div className="mobile-back text-right" onClick={this.closeNav.bind(this)}>
-                                Back<i className="fa fa-angle-right pl-2" aria-hidden="true"></i>
-                            </div>
-                        </li>
-                        <li className="mega"><Link to={`${process.env.PUBLIC_URL}/`}>{translate('home')}</Link></li>
-                        <li className="mega"><Link to={`${process.env.PUBLIC_URL}/`}>{translate('Services')}</Link></li>
-                        <li className="mega"><Link to={`${process.env.PUBLIC_URL}/`}>{translate('Manufacturing')}</Link></li>
-                        <li className="mega"><Link to={`${process.env.PUBLIC_URL}/`}>{translate('Raw_Materials')}</Link></li>
-                        <li className="mega"><Link to={`${process.env.PUBLIC_URL}/`}>{translate('Fashion')}</Link></li>
+                    {/*<ul id="main-menu" className="sm pixelstrap sm-horizontal" style={this.state.navClose}>*/}
+                        {/*<li >*/}
+                            {/*<div className="mobile-back text-right" onClick={this.closeNav.bind(this)}>*/}
+                                {/*Back<i className="fa fa-angle-right pl-2" aria-hidden="true"></i>*/}
+                            {/*</div>*/}
+                        {/*</li>*/}
+                        {/*<li className="mega"><Link to={`${process.env.PUBLIC_URL}/`}>{translate('home')}</Link></li>*/}
+                        {/*<li className="mega"><Link to={`${process.env.PUBLIC_URL}/`}>{translate('Services')}</Link></li>*/}
+                        {/*<li className="mega"><Link to={`${process.env.PUBLIC_URL}/`}>{translate('Manufacturing')}</Link></li>*/}
+                        {/*<li className="mega"><Link to={`${process.env.PUBLIC_URL}/`}>{translate('Raw_Materials')}</Link></li>*/}
+                        {/*<li className="mega"><Link to={`${process.env.PUBLIC_URL}/`}>{translate('Fashion')}</Link></li>*/}
                         {/*<li className="mega">*/}
                             {/*<a href="#">{translate('features')}*/}
                                 {/*<div className="lable-nav">{translate('new')}</div>*/}
@@ -270,7 +272,7 @@ class NavBar extends Component {
                                 {/*</li>*/}
                             {/*</ul>*/}
                         {/*</li>*/}
-                    </ul>
+                    {/*</ul>*/}
                 </nav>
             </div>
         )

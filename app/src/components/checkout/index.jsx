@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
-import { connect } from 'react-redux'
-import {Link, Redirect } from 'react-router-dom'
-import PaypalExpressBtn from 'react-paypal-express-checkout';
+// import PaypalExpressBtn from 'react-paypal-express-checkout';
 import SimpleReactValidator from 'simple-react-validator';
 
 import Breadcrumb from "../common/breadcrumb";
 import {removeFromWishlist} from '../../actions'
 import {getCartTotal} from "../../services";
+import {connect} from "react-redux";
 
 class checkOut extends Component {
 
@@ -232,8 +231,9 @@ class checkOut extends Component {
                                                     </div>
                                                     {(total !== 0)?
                                                     <div className="text-right">
-                                                        {(this.state.payment === 'stripe')? <button type="button" className="btn-solid btn" onClick={() => this.StripeClick()} >Place Order</button>:
-                                                         <PaypalExpressBtn env={'sandbox'} client={client} currency={'USD'} total={total} onError={onError} onSuccess={onSuccess} onCancel={onCancel} />}
+                                                        <button type="button" className="btn-solid btn" onClick={() => this.StripeClick()} >Place Order</button>
+                                                        {/*{(this.state.payment === 'stripe')? <button type="button" className="btn-solid btn" onClick={() => this.StripeClick()} >Place Order</button>:*/}
+                                                         {/*<PaypalExpressBtn env={'sandbox'} client={client} currency={'USD'} total={total} onError={onError} onSuccess={onSuccess} onCancel={onCancel} />}*/}
                                                     </div>
                                                     : ''}
                                                 </div>

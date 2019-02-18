@@ -6,46 +6,69 @@ import '../common/index.scss';
 
 const Content = props => {
 
-    const sponsorImgStyle = {height:'20vh', marginTop:'10px', marginLeft:'30px'};
+    const sponsorImgStyle = {height: '20vh', marginTop: '10px', marginLeft: '30px'};
+
+    const settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoPlay: true,
+        autoplaySpeed: 1000
+    };
     return <div>
-        {/*Home Slider*/}
-        <section className="p-0">
-            <Slider className="slide-1 home-slider">
-                <div>
-                    <div className="home home1 text-center img-fluid">
-                        <div className="container">
-                            <div className="row">
-                                <div className="col">
-                                    <div className="slider-contain">
-                                        <div>
-                                            <div>
-                                                <h4>welcome to fashion</h4>
-                                                <h1>men fashion</h1>
-                                                <Link to="/" className="btn btn-solid"> shop now</Link>
+
+        <div className="row">
+
+            {/*<div className="col-sm-12 col-lg-3">*/}
+                {/*/!*Home Slider*!/*/}
+                {/*<div className="container">*/}
+                {/*</div>*/}
+                {/*/!*Home Section End*!/*/}
+            {/*</div>*/}
+            <div className="col-sm-12 col-lg-12">
+                <div className="container">
+                    <section className="p-0">
+                        <Slider {...settings} className="slide-1 home-slider">
+                            <div>
+                                <div className="home home1 text-center img-fluid">
+                                    <div className="container">
+                                        <div className="row">
+                                            <div className="col">
+                                                <div className="slider-contain">
+                                                    <div>
+                                                        <div>
+                                                            <h4>welcome to fashion</h4>
+                                                            <h1>men fashion</h1>
+                                                            <Link to="/" className="btn btn-solid"> shop now</Link>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <div className="home home2 text-center img-fluid">
-                        <div className="container">
-                            <div className="row">
-                                <div className="col">
-                                    <div className="slider-contain">
+                            <div>
+                                <div className="home home2 text-center img-fluid">
+                                    <div className="container">
+                                        <div className="row">
+                                            <div className="col">
+                                                <div className="slider-contain">
 
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                        </Slider>
+                    </section>
                 </div>
-            </Slider>
-        </section>
-        {/*Home Section End*/}
+            </div>
+        </div>
+
 
         {/*Sponsors*/}
         <div className="container">
@@ -53,32 +76,32 @@ const Content = props => {
                 <div className="col-lg-2 col-sm-4 col-xs-6">
                     <img
                         src={`${process.env.PUBLIC_URL}/assets/images/sponsors/logo-dangote.jpg`}
-                         className="img-responsive"
-                         style={sponsorImgStyle}/>
+                        className="img-responsive"
+                        style={sponsorImgStyle}/>
                 </div>
                 <div className="col-lg-2 col-sm-4 col-xs-6">
                     <img
                         src={`${process.env.PUBLIC_URL}/assets/images/sponsors/logo-ivm.jpg`}
-                         className="img-responsive"
-                         style={sponsorImgStyle}/>
+                        className="img-responsive"
+                        style={sponsorImgStyle}/>
                 </div>
                 <div className="col-lg-2 col-sm-4 col-xs-6">
                     <img
                         src={`${process.env.PUBLIC_URL}/assets/images/sponsors/logo-daviva.jpg`}
 
-                         className="img-responsive"
-                         style={sponsorImgStyle}/>
+                        className="img-responsive"
+                        style={sponsorImgStyle}/>
                 </div>
                 <div className="col-lg-2 col-sm-4 col-xs-6">
                     <img
                         src={`${process.env.PUBLIC_URL}/assets/images/sponsors/logo-zaron.jpg`}
-                         className="img-responsive" style={sponsorImgStyle}/>
+                        className="img-responsive" style={sponsorImgStyle}/>
                 </div>
                 <div className="col-lg-2 col-sm-4 col-xs-6">
                     <img
                         src={`${process.env.PUBLIC_URL}/assets/images/sponsors/logo-kene-rapu.jpg`}
-                         className="img-responsive"
-                         style={sponsorImgStyle}/>
+                        className="img-responsive"
+                        style={sponsorImgStyle}/>
                 </div>
                 <div className="col-lg-2 col-sm-4 col-xs-6">
                     <img src={`${process.env.PUBLIC_URL}/assets/images/sponsors/logo-ezra-footwears.jpg`}
@@ -119,11 +142,15 @@ const Content = props => {
                                             </div>
                                             <div style={{position: 'absolute', top: '50%', left: '20%'}}>
                                                 <Link to="/">
-                                                    <h4 style={{color:'white', font: 'size 10px', fontWeight:'bold'}}>RAW
+                                                    <h4 style={{
+                                                        color: 'white',
+                                                        font: 'size 10px',
+                                                        fontWeight: 'bold'
+                                                    }}>RAW
                                                         MATERIALS</h4>
                                                 </Link>
                                                 <i className="fa fa-angle-down fa-2x"
-                                                   style={{color:'white', marginLeft:'80px',cursor:'pointer'}}></i>
+                                                   style={{color: 'white', marginLeft: '80px', cursor: 'pointer'}}></i>
                                             </div>
                                         </div>
                                     </div>
@@ -156,12 +183,16 @@ const Content = props => {
                                                          alt="Third slide"/>
                                                 </div>
                                             </div>
-                                            <div style={{position:'absolute', top: '50%', left: '20%'}}>
+                                            <div style={{position: 'absolute', top: '50%', left: '20%'}}>
                                                 <Link to="/">
-                                                    <h4 style={{color:'white', font:'size 10px', fontWeight: 'bold'}}>MANUFACTURING</h4>
+                                                    <h4 style={{
+                                                        color: 'white',
+                                                        font: 'size 10px',
+                                                        fontWeight: 'bold'
+                                                    }}>MANUFACTURING</h4>
                                                 </Link>
                                                 <i className="fa fa-angle-down fa-2x"
-                                                  style={{color:'white',marginLeft:'80px',cursor:'pointer'}}></i>
+                                                   style={{color: 'white', marginLeft: '80px', cursor: 'pointer'}}></i>
                                             </div>
                                         </div>
                                     </div>
@@ -181,19 +212,21 @@ const Content = props => {
                                                 </div>
                                                 <div className=" carousel-item" style={{height: '50%'}}>
                                                     <img className="d-block w-100"
-                                                         src={`${process.env.PUBLIC_URL}/assets/images/categories/hp-products.jpg`} alt="Second slide"/>
+                                                         src={`${process.env.PUBLIC_URL}/assets/images/categories/hp-products.jpg`}
+                                                         alt="Second slide"/>
                                                 </div>
-                                                <div className="carousel-item" style={{height:"50%"}}>
+                                                <div className="carousel-item" style={{height: "50%"}}>
                                                     <img className="d-block w-100"
-                                                         src={`${process.env.PUBLIC_URL}/assets/images/categories/hp-products.jpg`} alt="Third slide"/>
+                                                         src={`${process.env.PUBLIC_URL}/assets/images/categories/hp-products.jpg`}
+                                                         alt="Third slide"/>
                                                 </div>
                                             </div>
 
                                         </div>
-                                        <div style={{position:'absolute', top: '50%', left: '30%'}}>
-                                            <h4 style={{color: 'white', font:'10', fontWeight:'bold'}}>PRODUCTS</h4>
+                                        <div style={{position: 'absolute', top: '50%', left: '30%'}}>
+                                            <h4 style={{color: 'white', font: '10', fontWeight: 'bold'}}>PRODUCTS</h4>
                                             <i className="fa fa-angle-down fa-2x"
-                                               style={{color: 'white', marginLeft:'50px',cursor:'pointer'}}></i>
+                                               style={{color: 'white', marginLeft: '50px', cursor: 'pointer'}}></i>
                                         </div>
 
                                     </div>
@@ -231,9 +264,9 @@ const Content = props => {
 
 
                                         <div style={{position: 'absolute', top: '50%', left: '35%'}}>
-                                            <h4 style={{color:"#fff", font:"size 10px"}}>SERVICE</h4>
+                                            <h4 style={{color: "#fff", font: "size 10px"}}>SERVICE</h4>
                                             <i className="fa fa-angle-down fa-2x"
-                                               style={{color:'white', marginLeft:'40px',cursor:'pointer'}}></i>
+                                               style={{color: 'white', marginLeft: '40px', cursor: 'pointer'}}></i>
                                         </div>
                                     </div>
                                 </div>

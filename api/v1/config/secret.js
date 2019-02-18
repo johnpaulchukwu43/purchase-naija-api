@@ -1,7 +1,8 @@
-module.exports = {
+const dotenv = require('dotenv');
+dotenv.config();
 
-    // database: 'mongodb://user:abc123@ds125335.mlab.com:25335/ecommerce',
-    database: 'mongodb://purchaseNaija:purchaseNaija123@ds159507.mlab.com:59507/purchasenaija',
-    port: 5000,
-    secretKey: "JASON@!12"
+module.exports = {
+    database:process.env.DATABASE_URL,
+    port: process.env.PORT,
+    secretKey: process.env.SECRET_KEY
 };

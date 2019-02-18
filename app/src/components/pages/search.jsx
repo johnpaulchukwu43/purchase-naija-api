@@ -30,8 +30,7 @@ class Search extends Component {
                                                        aria-label="Amount (to the nearest dollar)"
                                                        placeholder="Search Products......" />
                                                     <div className="input-group-append">
-                                                        <button className="btn btn-solid"><i
-                                                            className="fa fa-search"></i>Search
+                                                        <button className="btn btn-solid"><i className="fa fa-search"></i>Search
                                                         </button>
                                                     </div>
                                             </div>

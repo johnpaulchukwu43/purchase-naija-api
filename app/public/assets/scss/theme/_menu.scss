@@ -1490,7 +1490,7 @@ $theme-deafult__toggle-spacing: floor($theme-deafult__item-height * 0.1);
   .main-menu {
     .menu-right {
       .icon-nav {
-        .mobile-search, .mobile-cart, .mobile-setting {
+        .mobile-search, .mobile-cart, .mobile-setting, .mobile-account {
           i {
             display: none;
           }
@@ -1501,15 +1501,7 @@ $theme-deafult__toggle-spacing: floor($theme-deafult__item-height * 0.1);
           }
         }
         .mobile-search {
-          .show-div {
-            .form-inline {
-              button {
-                i {
-                  display: inline-block;
-                }
-              }
-            }
-          }
+          display: none;
         }
       }
     }
@@ -1603,7 +1595,7 @@ $theme-deafult__toggle-spacing: floor($theme-deafult__item-height * 0.1);
     }
     .menu-right {
       .icon-nav {
-        .mobile-setting, .mobile-cart,.mobile-search {
+        .mobile-setting, .mobile-cart,.mobile-search,.mobile-account {
           position: fixed;
           bottom: 20px;
           right: 16%;
@@ -1616,6 +1608,19 @@ $theme-deafult__toggle-spacing: floor($theme-deafult__item-height * 0.1);
               top: unset;
               bottom: 42px;
               left: -118px !important;
+            }
+          }
+        }
+        .mobile-account{
+          right: 30%;
+          i {
+            display: inline-block;
+            font-size: 22px;
+            color: $header-font;
+          }
+          div {
+            img {
+              display: none;
             }
           }
         }
@@ -1678,7 +1683,12 @@ $theme-deafult__toggle-spacing: floor($theme-deafult__item-height * 0.1);
             }
           }
         }
+        
+
       }
+    }
+    .search-section{
+      display: none;
     }
   }
   .brand-logo {

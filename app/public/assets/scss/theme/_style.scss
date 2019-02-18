@@ -1,10 +1,6 @@
 /*-----------------------------------------------------------------------------------
 
-    Template Name:Multikart
-    Template URI: themes.pixelstrap.com/multikart
-    Description: This is E-commerce website
-    Author: Pixelstrap
-    Author URI: https://themeforest.net/user/pixelstrap
+
 
 ----------------------------------------------------------------------------------- */
 /* 1. General CSS
@@ -941,12 +937,21 @@ header {
     }
   }
 }
+
+.centralize-menu{
+  width: 100%;
+  padding-right: 50px;
+  padding-left: 50px;
+  margin-right: auto;
+  margin-left: auto;
+}
 .main-menu {
   position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
   z-index: 9;
+  height:80px;
   &.product-full-page {
     z-index: 9999;
   }
@@ -4966,7 +4971,7 @@ footer{
         padding: 15px 20px;
       }
       i {
-        padding-right: 10px;
+        padding-right: 5px;
       }
       .btn {
         z-index: 0;
@@ -4974,6 +4979,40 @@ footer{
     }
   }
 }
+
+
+.search-section{
+  width:50%;
+  display: flex;
+  float: right;
+  .input-group {
+    input {
+      border-radius: 0 5px 5px 0;
+      padding: 15px 20px;
+    }
+    i {
+      padding-right: 5px;
+    }
+    .btn {
+      z-index: 0;
+    }
+
+  }
+
+}
+.search-categories{
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  padding: 15px 20px;
+  box-sizing: border-box;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #6d6c6e;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+}
+
 
 // contacts //
 .contact-page {
