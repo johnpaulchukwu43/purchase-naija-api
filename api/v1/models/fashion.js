@@ -1,3 +1,4 @@
+/*
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 const Schema = mongoose.Schema;
@@ -18,7 +19,7 @@ const BaseProductSchema = new Schema ({
     color: { type: String }
 });
 
-/*// Extend function
+// Extend function
 const extend = (Schema, obj) => (
     new mongoose.Schema(
         Object.assign({}, Schema.obj, obj)
@@ -28,8 +29,9 @@ const extend = (Schema, obj) => (
 // Usage:
 const ManufacturingSchema = extend(BaseProductSchema, {
     SubCategory: {type: String, required: true},
-});*/
+});
 
 
-module.exports = mongoose.model('BaseProduct', BaseProductSchema);
-// module.exports = mongoose.model('Manufacturing', ManufacturingSchema);
+// module.exports = mongoose.model('BaseProduct', BaseProductSchema);
+module.exports = mongoose.model('Manufacturing', ManufacturingSchema);
+*/

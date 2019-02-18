@@ -2,8 +2,9 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt-nodejs');
+var moment = require('moment');
 
-const BaseProductSchema = new Schema ({
+const FashionSchema = new Schema ({
     name: { type: String, required: true } ,
     price: { type: String, required: true },
     description: { type: String, required: true },
@@ -13,9 +14,16 @@ const BaseProductSchema = new Schema ({
     imageUrl: { type: String, required: true },
     quantity: { type: String, required: true },
     productCategory: { type: String, required: true},
-    createdAt: { type: Date },
-    updatedAt: {type: Date },
-    color: { type: String }
+    createdAt: { type: String, default: moment().format("L") },
+    updatedAt: { type: String, default: moment().format("L") },
+    color: { type: String },
+    Size:{ type: String },
+    Brand:{ type: String },
+    Gender:{ type: String },
+    SubCategory:{ type: String }
+
+
+
 });
 
 /*// Extend function
@@ -31,5 +39,6 @@ const ManufacturingSchema = extend(BaseProductSchema, {
 });*/
 
 
-module.exports = mongoose.model('BaseProduct', BaseProductSchema);
-// module.exports = mongoose.model('Manufacturing', ManufacturingSchema);
+// module.exports = mongoose.model('BaseProduct', BaseProductSchema);
+module.exports = mongoose.model('Fashion', FashionSchema);
+

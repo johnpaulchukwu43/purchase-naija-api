@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 const Schema = mongoose.Schema;
+// const bcrypt = require('bcryptjs');
 const bcrypt = require('bcrypt-nodejs');
 
 const usernameLengthChecker = (username) => {
@@ -102,24 +103,20 @@ const serviceProviderSchema = new Schema ({
     password: { type: String, required: true, validate: passwordValidate }
 });
 
-// hash the password
 serviceProviderSchema.pre('save', function (next) {
-    var user = this;
-    if(!user.isModified('password')) return next();
-    bcrypt.genSalt(10, function (err, salt) {
-        if (err) return next(err);
-        bcrypt.hash(user.password, salt, null, function (err, hash) {
-            if (err) return next(err);
-            user.password = hash;
-            next();
-        })
-    })
+    if(!this.isModified('password'))
+        return next();
+
+    bcrypt.hash(this.password, null, null, (err, hash) => {
+        if(err) return next(err);
+        this.password = hash;
+        next();
+    });
 });
 
-//compare password in the database
-serviceProviderSchema.methods.comparePassword = function (password) {
-    return bcrypt.compareSync(password, this.password)  ;
-};
+serviceProviderSchema.methods.comparePassword = function(password){
+    return bcrypt.compareSync(password, this.password);
+}
 
 
 module.exports = mongoose.model('serviceProvider', serviceProviderSchema);
