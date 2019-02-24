@@ -143,7 +143,7 @@ module.exports = function(router){
     });
 
     // setting up the token for the service provider on login
-    router.use(function (req, res, next) {
+   /* router.use(function (req, res, next) {
         const token = req.headers['authorization'];
         if (!token){
             res.json({ success: false, message: 'No token provided' });
@@ -157,11 +157,31 @@ module.exports = function(router){
                 }
             });
         }
-    });
+    });*/
+
+    /* BEGINNING OF ALL ENDPOINTS THAT REQUIRE TOKEN */
+
+    // setting up the token for the Customer on login
+
+    const tokenChecker = function (req, res, next) {
+        const token = req.headers['authorization'];
+        if (!token){
+            res.status(400).json({ success: false, message: 'No token provided' });
+        } else {
+            jwt.verify(token, config.secretKey, function(err, decoded) {
+                if (err) {
+                    res.status(400).json({ success: false, message: 'token invalid: ' +err });
+                } else {
+                    req.decoded = decoded;
+                    next();
+                }
+            });
+        }
+    };
 
     //Update user information
 
-    router.put('/serviceProvider/:id', function (req, res) {
+    router.put('/serviceProvider/:id', tokenChecker, function (req, res) {
         if (!req.body.businessName) {
             res.status(400).json({success: false, message: 'Business Name is required'});
         } else {
@@ -199,7 +219,7 @@ module.exports = function(router){
 
     //API to get a particular user
 
-    router.get('user/:id', function (req, res) {
+    router.get('user/:id', tokenChecker, function (req, res) {
         User.findOne({ id: req.params.id}, function (err, user) {
             if (err) {
                 res.status(500).json({success: false, message: err});
@@ -217,7 +237,7 @@ module.exports = function(router){
 
     //Add Manufacturing Products
 
-    router.post('/serviceProvider/products/manufacturing', function (req, res) {
+    router.post('/serviceProvider/products/manufacturing', tokenChecker, function (req, res) {
         if (!req.body.name) {
             res.status(400).json({success: false, message:'Product Name is required'});
         } else {
@@ -254,6 +274,7 @@ module.exports = function(router){
 
                                     let manufacturing = new Manufacturing({
                                         name: req.body.name,
+                                        serviceProdiver: req.body.serviceProdiver,
                                         price: req.body.price,
                                         description: req.body.description,
                                         productCode: randomstring.generate(10),
@@ -289,7 +310,7 @@ module.exports = function(router){
 
     //Add Beauty Products
 
-    router.post('/serviceProvider/products/beauty', function (req, res) {
+    router.post('/serviceProvider/products/beauty', tokenChecker, function (req, res) {
        if (!req.body.name) {
            res.status(400).json({success: false, message:'Product Name is required'});
        } else {
@@ -332,6 +353,7 @@ module.exports = function(router){
 
                                            let beauty = new Beauty({
                                                name: req.body.name,
+                                               serviceProdiver: req.body.serviceProdiver,
                                                price: req.body.price,
                                                description: req.body.description,
                                                productCode: randomstring.generate(10),
@@ -376,7 +398,7 @@ module.exports = function(router){
 
     //Add Computer Products
 
-    router.post('/serviceProvider/products/computer', function (req, res) {
+    router.post('/serviceProvider/products/computer', tokenChecker, function (req, res) {
         if (!req.body.name) {
             res.status(400).json({success: false, message:'Product Name is required'});
         } else {
@@ -437,6 +459,7 @@ module.exports = function(router){
 
                                                         let computer = new Computer({
                                                             name: req.body.name,
+                                                            serviceProdiver: req.body.serviceProdiver,
                                                             price: req.body.price,
                                                             description: req.body.description,
                                                             productCode: randomstring.generate(10),
@@ -486,7 +509,7 @@ module.exports = function(router){
 
     //Add Electronics Products
 
-    router.post('/serviceProvider/products/electronics', function (req, res) {
+    router.post('/serviceProvider/products/electronics', tokenChecker, function (req, res) {
         if (!req.body.name) {
             res.status(400).json({success: false, message:'Product Name is required'});
         } else {
@@ -526,6 +549,7 @@ module.exports = function(router){
 
                                                         let electronics = new Electronics({
                                                             name: req.body.name,
+                                                            serviceProdiver: req.body.serviceProdiver,
                                                             price: req.body.price,
                                                             description: req.body.description,
                                                             productCode: randomstring.generate(10),
@@ -571,7 +595,7 @@ module.exports = function(router){
 
     // Add Fashion Products
 
-    router.post('/serviceProvider/products/fashion', function (req, res) {
+    router.post('/serviceProvider/products/fashion', tokenChecker, function (req, res) {
         if (!req.body.name) {
             res.status(400).json({success: false, message:'Product Name is required'});
         } else {
@@ -620,6 +644,7 @@ module.exports = function(router){
 
                                                 let fashion = new Fashion({
                                                     name: req.body.name,
+                                                    serviceProdiver: req.body.serviceProdiver,
                                                     price: req.body.price,
                                                     description: req.body.description,
                                                     productCode: randomstring.generate(10),
@@ -664,7 +689,7 @@ module.exports = function(router){
 
     // Add Phone Products
 
-    router.post('/serviceProvider/products/phone', function (req, res) {
+    router.post('/serviceProvider/products/phone', tokenChecker, function (req, res) {
         if (!req.body.name) {
             res.status(400).json({success: false, message:'Product Name is required'});
         } else {
@@ -737,6 +762,7 @@ module.exports = function(router){
 
                                                                 let phone = new Phone({
                                                                     name: req.body.name,
+                                                                    serviceProdiver: req.body.serviceProdiver,
                                                                     price: req.body.price,
                                                                     description: req.body.description,
                                                                     productCode: randomstring.generate(10),
@@ -790,7 +816,7 @@ module.exports = function(router){
 
     //Add Raw Material Products
 
-    router.post('/serviceProvider/products/rawmaterial', function (req, res) {
+    router.post('/serviceProvider/products/rawmaterial', tokenChecker, function (req, res) {
         if (!req.body.name) {
             res.status(400).json({success: false, message:'Product Name is required'});
         } else {
@@ -824,6 +850,7 @@ module.exports = function(router){
 
                                             let rawmaterial = new Rawmaterial({
                                                 name: req.body.name,
+                                                serviceProdiver: req.body.serviceProdiver,
                                                 price: req.body.price,
                                                 description: req.body.description,
                                                 productCode: randomstring.generate(10),
@@ -862,7 +889,7 @@ module.exports = function(router){
 
     //Update Beauty Product
 
-    router.put('/serviceProvider/products/beauty/:id', function (req, res) {
+    router.put('/serviceProvider/products/beauty/:id', tokenChecker, function (req, res) {
 
         if (!req.body.name) {
             res.status(400).json({success: false, message: 'Product Name is required'});
@@ -905,6 +932,7 @@ module.exports = function(router){
 
                                             Beauty.findByIdAndUpdate(req.params.id, {
                                                 name: req.body.name,
+                                                serviceProdiver: req.body.serviceProdiver,
                                                 price: req.body.price,
                                                 description: req.body.description,
                                                 productCode: randomstring.generate(10),
@@ -940,7 +968,7 @@ module.exports = function(router){
 
     //Update Computer Product
 
-    router.put('/serviceProvider/products/computer/:id', function (req, res) {
+    router.put('/serviceProvider/products/computer/:id', tokenChecker, function (req, res) {
 
         if (!req.body.name) {
             res.status(400).json({success: false, message: 'Product Name is required'});
@@ -1002,6 +1030,7 @@ module.exports = function(router){
 
                                                         Computer.findByIdAndUpdate(req.params.id, {
                                                             name: req.body.name,
+                                                            serviceProdiver: req.body.serviceProdiver,
                                                             price: req.body.price,
                                                             description: req.body.description,
                                                             productCode: randomstring.generate(10),
@@ -1044,7 +1073,7 @@ module.exports = function(router){
 
     // Update Electronics Product
 
-    router.put('/serviceProvider/products/electronics/:id', function (req, res) {
+    router.put('/serviceProvider/products/electronics/:id', tokenChecker, function (req, res) {
 
         if (!req.body.name) {
             res.status(400).json({success: false, message: 'Product Name is required'});
@@ -1106,6 +1135,7 @@ module.exports = function(router){
 
                                                         Electronics.findByIdAndUpdate(req.params.id, {
                                                             name: req.body.name,
+                                                            serviceProdiver: req.body.serviceProdiver,
                                                             price: req.body.price,
                                                             description: req.body.description,
                                                             productCode: randomstring.generate(10),
@@ -1152,7 +1182,7 @@ module.exports = function(router){
 
     // Update Fashion Product
 
-    router.put('/serviceProvider/products/fashion/:id', function (req, res) {
+    router.put('/serviceProvider/products/fashion/:id', tokenChecker, function (req, res) {
         if (!req.body.name) {
             res.status(400).json({success: false, message:'Product Name is required'});
         } else {
@@ -1202,6 +1232,7 @@ module.exports = function(router){
 
                                                 Fashion.findByIdAndUpdate(req.params.id, {
                                                     name: req.body.name,
+                                                    serviceProdiver: req.body.serviceProdiver,
                                                     price: req.body.price,
                                                     description: req.body.description,
                                                     productCode: randomstring.generate(10),
@@ -1242,7 +1273,7 @@ module.exports = function(router){
 
     // Update Phone Product
 
-    router.put('/serviceProvider/products/phone/:id', function (req, res) {
+    router.put('/serviceProvider/products/phone/:id', tokenChecker, function (req, res) {
         if (!req.body.name) {
             res.status(400).json({success: false, message:'Product Name is required'});
         } else {
@@ -1316,6 +1347,7 @@ module.exports = function(router){
 
                                                                 Phone.findByIdAndUpdate(req.params.id, {
                                                                     name: req.body.name,
+                                                                    serviceProdiver: req.body.serviceProdiver,
                                                                     price: req.body.price,
                                                                     description: req.body.description,
                                                                     productCode: randomstring.generate(10),
@@ -1365,7 +1397,7 @@ module.exports = function(router){
 
     // Update Raw Material Product
 
-    router.put('/serviceProvider/products/rawmaterial/:id', function (req, res) {
+    router.put('/serviceProvider/products/rawmaterial/:id', tokenChecker, function (req, res) {
         if (!req.body.name) {
             res.status(400).json({success: false, message:'Product Name is required'});
         } else {
@@ -1400,6 +1432,7 @@ module.exports = function(router){
 
                                 Rawmaterial.findByIdAndUpdate(req.params.id, {
                                     name: req.body.name,
+                                    serviceProdiver: req.body.serviceProdiver,
                                     price: req.body.price,
                                     description: req.body.description,
                                     productCode: randomstring.generate(10),
@@ -1434,7 +1467,7 @@ module.exports = function(router){
 
     // Update Manufacturing Product
 
-    router.put('/serviceProvider/products/manufacturing/:id', function (req, res) {
+    router.put('/serviceProvider/products/manufacturing/:id', tokenChecker, function (req, res) {
         if (!req.body.name) {
             res.status(400).json({success: false, message:'Product Name is required'});
         } else {
@@ -1472,6 +1505,7 @@ module.exports = function(router){
 
                                     Manufacturing.findByIdAndUpdate(req.params.id, {
                                         name: req.body.name,
+                                        serviceProdiver: req.body.serviceProdiver,
                                         price: req.body.price,
                                         description: req.body.description,
                                         productCode: randomstring.generate(10),
@@ -1510,7 +1544,7 @@ module.exports = function(router){
 
     //Delete beauty product
 
-    router.delete('/serviceProvider/products/beauty/:id', function (req,res) {
+    router.delete('/serviceProvider/products/beauty/:id', tokenChecker, function (req,res) {
        Beauty.findByIdAndRemove({_id: req.params.id}).then(function (done) {
          if(done){
              res.status(200).json({success: true, message: 'Product was successfully deleted'});
@@ -1522,7 +1556,7 @@ module.exports = function(router){
 
     //Delete manufacturing product
 
-    router.delete('/serviceProvider/products/manufacturing/:id', function (req,res) {
+    router.delete('/serviceProvider/products/manufacturing/:id', tokenChecker, function (req,res) {
         Manufacturing.findByIdAndRemove({_id: req.params.id}).then(function (done) {
             if(done){
                 res.status(200).json({success: true, message: 'Product was successfully deleted'});
@@ -1534,7 +1568,7 @@ module.exports = function(router){
 
     //Delete fashion product
 
-    router.delete('/serviceProvider/products/fashion/:id', function (req,res) {
+    router.delete('/serviceProvider/products/fashion/:id', tokenChecker, function (req,res) {
         Fashion.findByIdAndRemove({_id: req.params.id}).then(function (done) {
             if(done){
                 res.status(200).json({success: true, message: 'Product was successfully deleted'});
@@ -1546,7 +1580,7 @@ module.exports = function(router){
 
     //Delete electronics product
 
-    router.delete('/serviceProvider/products/electronics/:id', function (req,res) {
+    router.delete('/serviceProvider/products/electronics/:id', tokenChecker, function (req,res) {
         Electronics.findByIdAndRemove({_id: req.params.id}).then(function (done) {
             if(done){
                 res.status(200).json({success: true, message: 'Product was successfully deleted'});
@@ -1558,7 +1592,7 @@ module.exports = function(router){
 
     //Delete beauty product
 
-    router.delete('/serviceProvider/products/computer/:id', function (req,res) {
+    router.delete('/serviceProvider/products/computer/:id', tokenChecker, function (req,res) {
         Computer.findByIdAndRemove({_id: req.params.id}).then(function (done) {
             if(done){
                 res.status(200).json({success: true, message: 'Product was successfully deleted'});
@@ -1570,7 +1604,7 @@ module.exports = function(router){
 
     //Delete phone product
 
-    router.delete('/serviceProvider/products/phone/:id', function (req,res) {
+    router.delete('/serviceProvider/products/phone/:id', tokenChecker, function (req,res) {
         Phone.findByIdAndRemove({_id: req.params.id}).then(function (done) {
             if(done){
                 res.status(200).json({success: true, message: 'Product was successfully deleted'});
@@ -1582,7 +1616,7 @@ module.exports = function(router){
 
     //Delete Raw material product
 
-    router.delete('/serviceProvider/products/rawmaterial/:id', function (req,res) {
+    router.delete('/serviceProvider/products/rawmaterial/:id', tokenChecker, function (req,res) {
         Rawmaterial.findByIdAndRemove({_id: req.params.id}).then(function (done) {
             if(done){
                 res.status(200).json({success: true, message: 'Product was successfully deleted'});

@@ -729,26 +729,41 @@ module.exports = function(router){
 
     // setting up the token for the Customer on login
 
-    router.use(function (req, res, next) {
+    const tokenChecker = function (req, res, next) {
         const token = req.headers['authorization'];
         if (!token){
-            res.json({ success: false, message: 'No token provided' });
+            res.status(400).json({ success: false, message: 'No token provided' });
         } else {
             jwt.verify(token, config.secretKey, function(err, decoded) {
                 if (err) {
-                    res.json({ success: false, message: 'token invalid: ' +err });
+                    res.status(400).json({ success: false, message: 'token invalid: ' +err });
                 } else {
                     req.decoded = decoded;
                     next();
                 }
             });
         }
-    });
+    };
 
+   /*router.use(function (req, res, next) {
+         const token = req.headers['authorization'];
+         if (!token){
+             res.status(400).json({ success: false, message: 'No token provided' });
+         } else {
+             jwt.verify(token, config.secretKey, function(err, decoded) {
+                 if (err) {
+                     res.status(400).json({ success: false, message: 'token invalid: ' +err });
+                 } else {
+                     req.decoded = decoded;
+                     next();
+                 }
+             });
+         }
+     });*/
 
     //Customer update information functionality
 
-    router.put('/user/update/:id', function (req, res) {
+    router.put('/user/update/:id', tokenChecker, function (req, res) {
         if (!req.body.email) {
             res.status(400).json({success: false, message: 'Email is required'});
         } else {
@@ -798,7 +813,7 @@ module.exports = function(router){
 
     //Endpoint to add User Cart based on the productID and category
 
-    router.post('/userCart/:userEmail?/:category?/:productID?', function (req, res) {
+    router.post('/userCart/:userEmail?/:category?/:productID?', tokenChecker, function (req, res) {
         var status = "PENDING";
         var userCart = new UserCart({
             userEmail: req.query.userEmail,
@@ -820,7 +835,7 @@ module.exports = function(router){
 
     // Using productID you can get the product itself by using the get product using ID end point
 
-    router.get('/userCart/:userEmail', function (req,res) {
+    router.get('/userCart/:userEmail', tokenChecker, function (req,res) {
         UserCart.find({userEmail: req.params.userEmail}, function (err, userCart) {
             if (err) {
                 res.status(400).json({success: false, message: err});
@@ -843,7 +858,7 @@ module.exports = function(router){
 
     //Endpoint to Update User cart - Quantity
 
-    router.put('/updateUserCartQuantity/:userEmail?/:category?/:productID?', function (req, res) {
+    router.put('/updateUserCartQuantity/:userEmail?/:category?/:productID?', tokenChecker, function (req, res) {
         UserCart.findOne({userEmail: req.query.userEmail, category: req.query.category, productID:req.query.productID}, function (err,userCart) {
             if(err) {
                 res.status(500).json({success: false, message: err});
@@ -868,7 +883,7 @@ module.exports = function(router){
 
     //Endpoint to Update User cart - Status
 
-    router.put('/updateUserCartStatus/:userEmail?/:category?/:productID?', function (req, res) {
+    router.put('/updateUserCartStatus/:userEmail?/:category?/:productID?', tokenChecker, function (req, res) {
         UserCart.findOne({userEmail: req.query.userEmail, category: req.query.category, productID:req.query.productID}, function (err,userCart) {
             if(err) {
                 res.status(500).json({success: false, message: err});
@@ -893,7 +908,7 @@ module.exports = function(router){
 
     //Endpoint to Delete a userCart
 
-    router.delete('/userCart/:userEmail?/:category?/:productID?', function (req,res) {
+    router.delete('/userCart/:userEmail?/:category?/:productID?', tokenChecker, function (req,res) {
         UserCart.findOne({userEmail: req.query.userEmail, productID:req.query.productID, category:req.query.category}, function (err,cart) {
             if(err) {
                 res.status(500).json({success: false, message: err});
@@ -913,7 +928,7 @@ module.exports = function(router){
 
     //Create comment by user Endpoint
 
-    router.post('/review/:userEmail?/:category?/:productID?', function (req, res) {
+    router.post('/review/:userEmail?/:category?/:productID?', tokenChecker, function (req, res) {
         if(!req.query.productID) {
             res.status(400).json({success: false, message: 'Product ID is required'});
         } else {
@@ -946,7 +961,7 @@ module.exports = function(router){
 
     //Endpoint to get reviews for a product
 
-    router.get('/review/:category?/:productID?', function(req, res) {
+    router.get('/review/:category?/:productID?', tokenChecker, function(req, res) {
         Review.find({category: req.query.category, productID: req.query.productID}, function (err, review) {
             if (err){
                 res.status(500).json({success:false, message: err});
@@ -962,7 +977,7 @@ module.exports = function(router){
 
     //  Endpoint to get reviews for a single user
 
-    router.get('/getreview/:userEmail', function(req, res) {
+    router.get('/getreview/:userEmail', tokenChecker, function(req, res) {
         Review.find({userEmail: req.params.userEmail}, function (err, review) {
             if (err){
                 res.status(500).json({success:false, message: err});
@@ -977,7 +992,7 @@ module.exports = function(router){
     });
 
     // Endpoint to get all reviews
-    router.get('/allreview', function(req, res) {
+    router.get('/allreview', tokenChecker, function(req, res) {
         Review.find({}, function (err, review) {
             if (err){
                 res.status(500).json({success:false, message: err});
@@ -994,7 +1009,7 @@ module.exports = function(router){
 
     /* BEGINNING OF ORDER API */
 
-    router.post('/order/:userEmail', function (req, res) {
+    router.post('/order/:userEmail', tokenChecker, function (req, res) {
        if (!req.params.userEmail) {
            res.status(500).json({ success: false, message: "User email is required"});
        } else {

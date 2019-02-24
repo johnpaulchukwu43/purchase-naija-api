@@ -113,10 +113,47 @@ module.exports = function(router){
         }
     });
 
+    // setting up the token for the Admin on login
 
+   /* router.use(function (req, res, next) {
+        const token = req.headers['authorization'];
+        if (!token){
+            res.json({ success: false, message: 'No token provided' });
+        } else {
+            jwt.verify(token, config.secretKey, function(err, decoded) {
+                if (err) {
+                    res.json({ success: false, message: 'token invalid: ' +err });
+                } else {
+                    req.decoded = decoded;
+                    next();
+                }
+            });
+        }
+    });*/
+
+
+    /* BEGINNING OF ALL ENDPOINTS THAT REQUIRE TOKEN */
+
+    // setting up the token for the Customer on login
+
+    const tokenChecker = function (req, res, next) {
+        const token = req.headers['authorization'];
+        if (!token){
+            res.status(400).json({ success: false, message: 'No token provided' });
+        } else {
+            jwt.verify(token, config.secretKey, function(err, decoded) {
+                if (err) {
+                    res.status(400).json({ success: false, message: 'token invalid: ' +err });
+                } else {
+                    req.decoded = decoded;
+                    next();
+                }
+            });
+        }
+    };
 
     // register staff api
-    router.post('/admin/registerStaff', function (req, res) {
+    router.post('/admin/registerStaff', tokenChecker, function (req, res) {
         if (!req.body.username) {
             res.status(400).json({success: false, message: 'Username is required'});
         } else {
@@ -160,7 +197,7 @@ module.exports = function(router){
 
     //API to get a particular user
 
-    router.get('/user/:id', function (req, res) {
+    router.get('/user/:id', tokenChecker, function (req, res) {
        User.findOne({ id: req.params.id}, function (err, user) {
            if (err) {
                res.status(500).json({success: false, message: err});
@@ -287,7 +324,7 @@ module.exports = function(router){
     });*/
 
     //Delete product
-    router.delete('/serviceProvider/products/:id', function (req,res) {
+    router.delete('/serviceProvider/products/:id', tokenChecker, function (req,res) {
         Products.findByIdAndRemove({_id: req.params.id}).then(function (done) {
             if(done){
                 res.status(200).json({success: true, message: 'Product was successfully deleted'});
