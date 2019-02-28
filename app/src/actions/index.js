@@ -3,6 +3,11 @@ import * as types from '../constants/ActionTypes'
 import store from "../store";
 import { toast  } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
+import setPaginationFor from './factory/createPaginationAction';
+import { FASHION_PRODUCTS_ENDPOINT, LOGIN_USER_ENDPOINT} from "../constants/endpoints";
+import axios from "axios";
+import {FASHION_PRODUCT} from "../constants/ActionTypes";
+import {RAW_MATERIALS_PRODUCT} from "../constants/ActionTypes";
 
 export const fetchProductsBegin = () => ({
     type: types.FETCH_PRODUCTS_BEGIN
@@ -13,7 +18,55 @@ export const fetchProductsBegin = () => ({
 export const receiveProducts = products => ({
     type: types.RECEIVE_PRODUCTS,
     products
-})
+});
+
+
+
+export function getProductCategory(endpoint,product_category_name){
+
+    return dispatch =>{
+        // return axios.get(FASHION_PRODUCTS_ENDPOINT).then(res => {
+        //     let data = [];
+        //     shop.getProductsByCategory(product=>{
+        //         data = product;
+        //     });
+        //
+        //     // let starter = lastpoint || 0;
+        //     // let productSize = 39;
+        //     // let isDataleft = true;
+        //     // let data = [];
+        //     // let amountNeeded = parseInt(size) + starter;
+        //     //     data = response.slice(starter,size)
+        //     // }
+        //     // else{
+        //     //     isDataleft=false;
+        //     // }
+        //     // console.log(JSON.stringify(data));
+        //     dispatch(setPaginationFor(FASHION_PRODUCT,{data}));
+        // });
+        switch(product_category_name){
+            case FASHION_PRODUCT:
+                return shop.getFashionCategoryProducts(data=>{
+                    dispatch(setPaginationFor(product_category_name,{data}));
+                    return data;
+                });
+
+            case RAW_MATERIALS_PRODUCT:
+                return shop.getRawMaterialCategoryProducts(data=>{
+                    dispatch(setPaginationFor(product_category_name,{data}));
+                    return data;
+                });
+
+            default:
+                return shop.getFashionCategoryProducts(data=>{
+                    dispatch(setPaginationFor(product_category_name,{data}));
+                    return data;
+                });
+        }
+
+
+    };
+}
 
 export const getAllProducts = () => dispatch => {
     dispatch(fetchProductsBegin());
@@ -25,7 +78,7 @@ export const getAllProducts = () => dispatch => {
 export const fetchSingleProduct = productId => ({
     type: types.FETCH_SINGLE_PRODUCT,
     productId
-})
+});
 
 
 

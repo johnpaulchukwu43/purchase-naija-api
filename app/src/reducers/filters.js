@@ -3,7 +3,7 @@ import * as types from '../constants/ActionTypes'
 
 const filtersReducerDefaultState = {
     brand: ["nike", "caprese", "lifestyle"],
-    value: { min: 250, max: 950 },
+    value: { min: 100, max: 10000000 },
     sortBy: "Newest"
 };
 

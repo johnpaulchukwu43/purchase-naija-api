@@ -5,7 +5,7 @@ import 'react-input-range/lib/css/index.css';
 import { SlideToggle } from 'react-slide-toggle';
 
 
-import {getBrands, getColors, getMinMaxPrice} from '../../../services/fashionService';
+import {getBrands, getColors, getMinMaxPrice} from '../../../services';
 import {filterBrand, filterColor, filterPrice} from '../../../actions'
 
 class Filter extends Component {
@@ -44,7 +44,6 @@ class Filter extends Component {
 
     render (){
         const filteredBrands = this.props.filters.brand;
-        //console.log(this.props.brands);
         return (
                 <div className="collection-filter-block">
                     {/*brand filter start*/}

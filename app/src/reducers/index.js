@@ -8,6 +8,7 @@ import filtersReducer from './filters';
 import wishlistReducer from './wishlist';
 import authReducer from './auth'
 import compareReducer from './compare';
+import productCategoriesReducer from "./product_categories";
 
 
 const rootReducer = combineReducers({
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
     filters: filtersReducer,
     wishlist: wishlistReducer,
     compare: compareReducer,
+    categories:productCategoriesReducer,
     Intl
 });
 

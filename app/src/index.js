@@ -9,16 +9,16 @@ import './index.scss';
 // Import custom components
 import store from './store';
 import translations from './constants/translations'
-import { getAllProducts } from './actions'
+import {getAllProducts} from './actions'
 import Fashion from './components/layouts/fashion';
 import Index from './components/layouts/index';
 import jwtDecode from 'jwt-decode';
 
 //Category imports
-import PhonesCategory from './components/categories/Phones'
+import PhonesCategory from './components/categories/phones'
 import RawMaterialsCategory from './components/categories/raw_materials'
 import ManufactruingCategory from './components/categories/manufacturing'
-import FashionCategory from './components/products/fashion'
+import FashionCategory from './components/categories/fashion/index'
 import ElectronicsCategory from './components/categories/electronics'
 import ComputerCategory from './components/categories/computer'
 import BeautyCategory from './components/categories/beauty'
@@ -31,16 +31,17 @@ import CollectionNoSidebar from "./components/categories/collection-no-sidebar";
 import CollectionRightSidebar from "./components/categories/collection-right-sidebar";
 
 // Product Pages
-import LeftSideBar from "./components/products/left-sidebar";
-import RightSideBar from "./components/products/right-sidebar";
-import NoSideBar from "./components/products/no-sidebar";
-import LeftImage from "./components/products/left-image";
-import RightImage from "./components/products/right-image";
-import Accordian from "./components/products/accordian";
-import ColumnLeft from "./components/products/column-left";
-import ColumnRight from "./components/products/column-right";
-import Column from "./components/products/column";
-import Vertical from "./components/products/vertical";
+import SingleProduct from "./components/product/single-product";
+import LeftSideBar from "./components/product/left-sidebar";
+import RightSideBar from "./components/product/right-sidebar";
+import NoSideBar from "./components/product/no-sidebar";
+import LeftImage from "./components/product/left-image";
+import RightImage from "./components/product/right-image";
+import Accordian from "./components/product/accordian";
+import ColumnLeft from "./components/product/column-left";
+import ColumnRight from "./components/product/column-right";
+import Column from "./components/product/column";
+import Vertical from "./components/product/vertical";
 
 // Features
 import Layout from './components/app'
@@ -71,7 +72,9 @@ import Details from './components/blogs/details'
 import BlogPage from './components/blogs/blog-page'
 import setAuthorizationToken from "./utils/setAuthorizationToken";
 import {setCurrentUser} from "./actions/AuthActions";
-import Phones from "./components/categories/Phones";
+import Phones from "./components/categories/phones";
+import {FASHION_PRODUCT} from "./constants/ActionTypes";
+import {FASHION_SINGLE_PRODUCT_ROUTE} from "./constants/app-routes";
 
 
 
@@ -86,7 +89,6 @@ class Root extends React.Component {
         }
 
         store.dispatch(getAllProducts());
-
         return(
         	<Provider store={store}>
                 <IntlProvider translations={translations} locale='en'>
@@ -115,12 +117,14 @@ class Root extends React.Component {
 								<Route path={`${process.env.PUBLIC_URL}/right-sidebar/collection`} component={CollectionRightSidebar}/>
 
 								{/*Routes For Single Product*/}
+								<Route path={`${FASHION_SINGLE_PRODUCT_ROUTE}/:id`}
+                                       render={(props) => <SingleProduct {...props} categoryType={FASHION_PRODUCT}/>}/>
 								<Route path={`${process.env.PUBLIC_URL}/left-sidebar/product/:id`} component={LeftSideBar}/>
 								<Route path={`${process.env.PUBLIC_URL}/right-sidebar/product/:id`} component={RightSideBar}/>
 								<Route path={`${process.env.PUBLIC_URL}/no-sidebar/product/:id`} component={NoSideBar}/>
 								<Route path={`${process.env.PUBLIC_URL}/col-left/product/:id`} component={ColumnLeft}/>
 								<Route path={`${process.env.PUBLIC_URL}/col-right/product/:id`} component={ColumnRight}/>
-								<Route path={`${process.env.PUBLIC_URL}/accordian/product/:id`} component={Accordian}/>
+                                <Route path={`${process.env.PUBLIC_URL}/accordian/product/:id`} component={Accordian}/>
 								<Route path={`${process.env.PUBLIC_URL}/column/product/:id`} component={Column}/>
 								<Route path={`${process.env.PUBLIC_URL}/left-image/product/:id`} component={LeftImage}/>
 								<Route path={`${process.env.PUBLIC_URL}/right-image/product/:id`} component={RightImage}/>

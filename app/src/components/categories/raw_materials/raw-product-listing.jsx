@@ -6,10 +6,11 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 
 import { getTotal, getCartProducts } from '../../../reducers'
 import { addToCart, addToWishlist, addToCompare } from '../../../actions'
-import {getVisibleproducts} from '../../../services';
-import ProductListItem from "./product-list-item";
+import {getVisibleproducts} from '../../../services/fashionService';
+import RawProductListItem from "./raw-product-list-item";
+import {getVisibleRawproducts} from "../../../services";
 
-class ProductListing extends Component {
+class RawProductListing extends Component {
 
     constructor (props) {
         super (props)
@@ -50,28 +51,23 @@ class ProductListing extends Component {
                                 next={this.fetchMoreItems}
                                 hasMore={this.state.hasMoreItems}
                                 loader={<div className="loading-cls"></div>}
-                                endMessage={
-                                    <p className="seen-cls seen-it-cls">
-                                        <b>Yay! You have seen it all</b>
-                                    </p>
-                                }
                             >
                                 <div className="row">
                                     { products.slice(0, this.state.limit).map((product, index) =>
-                                        <ProductListItem product={product} symbol={symbol}
-                                                         onAddToCompareClicked={() => addToCompare(product)}
-                                                         onAddToWishlistClicked={() => addToWishlist(product)}
-                                                         onAddToCartClicked={addToCart} key={index}/>)
+                                        <RawProductListItem product={product} symbol={symbol}
+                                                            onAddToCompareClicked={() => addToCompare(product)}
+                                                            onAddToWishlistClicked={() => addToWishlist(product)}
+                                                            onAddToCartClicked={addToCart} key={index}/>)
                                     }
                                 </div>
                             </InfiniteScroll>
                             :
                             <div className="row">
                                 <div className="col-sm-12 text-center section-b-space mt-5 no-found" >
-                                    <img src={`${process.env.PUBLIC_URL}/assets/images/empty-search.jpg`} class="img-fluid mb-4" />
+                                    <img src={`${process.env.PUBLIC_URL}/assets/images/empty-search.jpg`} className="img-fluid mb-4" />
                                     <h3>Sorry! Couldn't find the product you were looking For!!!    </h3>
                                     <p>Please check if you have misspelt something or try searching with other words.</p>
-                                    <Link to={`${process.env.PUBLIC_URL}/`} class="btn btn-solid">continue shopping</Link>
+                                    <Link to={`${process.env.PUBLIC_URL}/`} className="btn btn-solid">continue shopping</Link>
                                 </div>
                             </div>
                         }
@@ -82,11 +78,11 @@ class ProductListing extends Component {
     }
 }
 const mapStateToProps = (state) => ({
-    products: getVisibleproducts(state.data, state.filters),
+    products: getVisibleRawproducts(state.categories.rawMaterialsCategory.data, state.filters),
     symbol: state.data.symbol,
 })
 
 export default connect(
     mapStateToProps,
     {addToCart, addToWishlist, addToCompare}
-)(ProductListing)
+)(RawProductListing)

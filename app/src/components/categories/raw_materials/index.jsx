@@ -1,20 +1,29 @@
 import React, {Component} from 'react';
-import '../common/index.scss';
+import '../../common/index.scss';
 
 // import custom Components
-import ProductListing from './common/product-listing'
-import Breadcrumb from "../common/breadcrumb";
-import FilterBar from "./common/filter-bar";
+import Breadcrumb from "../../common/breadcrumb";
+import StickyBox from "react-sticky-box";
+import FilterBar from "./raw-filter-bar";
+import RawProductListing from "./raw-product-listing";
+import { getProductCategory } from '../../../actions'
+import PropTypes from "prop-types";
+import {RAW_MATERIALS_PRODUCT} from "../../../constants/ActionTypes";
+import {connect} from "react-redux";
 
 
 class RawMaterialsCategory extends Component {
 
 
+    componentWillMount(){
+        this.props.getProductCategory(RAW_MATERIALS_PRODUCT,RAW_MATERIALS_PRODUCT);
+    }
+
     render(){
 
         return (
             <div>
-                <Breadcrumb title={'Collection'} />
+                <Breadcrumb title={'Raw Materials Corner'} />
 
                 {/*Section Start*/}
                 <section className="section-b-space">
@@ -30,9 +39,8 @@ class RawMaterialsCategory extends Component {
                                                         <a href="#"><img src={`${process.env.PUBLIC_URL}/assets/images/mega-menu/2.jpg`}
                                                                          className="img-fluid" alt=""/></a>
                                                         <div className="top-banner-content small-section">
-                                                            <h4>fashion</h4>
+                                                            <h2>Raw Materials </h2>
                                                             <h5>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</h5>
-                                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. </p>
                                                         </div>
                                                     </div>
                                                     <div className="collection-product-wrapper">
@@ -49,7 +57,7 @@ class RawMaterialsCategory extends Component {
                                                         <div className="product-wrapper-grid">
                                                             <div className="container-fluid">
                                                                 <div className="row">
-                                                                    <ProductListing/>
+                                                                    <RawProductListing/>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -69,5 +77,8 @@ class RawMaterialsCategory extends Component {
         )
     }
 }
+RawMaterialsCategory.propTypes = {
+    getProductCategory: PropTypes.func.isRequired
+}
 
-export default RawMaterialsCategory;
+export default connect(null,{getProductCategory})(RawMaterialsCategory);

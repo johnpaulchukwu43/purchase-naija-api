@@ -2,12 +2,13 @@ import {GET_ERRORS, SET_CURRENT_USER} from "../constants/ActionTypes";
 import setAuthorizationToken from "../utils/setAuthorizationToken";
 import axios from "axios";
 import jwtDecode from 'jwt-decode';
+import {
+    LOGIN_SERVICE_PR0_ENDPOINT, LOGIN_USER_ENDPOINT,
+    REGISTER_SERVICE_PR0_ENDPOINT,
+    REGISTER_USER_ENDPOINT
+} from "../constants/endpoints";
 
-const BASE_PATH = "/api/v1";
-const LOGIN_USER_ENDPOINT = `${BASE_PATH}/user/login`;
-const REGISTER_USER_ENDPOINT = `${BASE_PATH}/user/signup`;
-const LOGIN_SERVICE_PR0_ENDPOINT = `${BASE_PATH}/serviceProvider/login`;
-const REGISTER_SERVICE_PR0_ENDPOINT =`${BASE_PATH}/serviceProvider/signup` ;
+
 //Auth
 export function setCurrentUser(user) {
     return {

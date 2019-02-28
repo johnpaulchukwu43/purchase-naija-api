@@ -5,18 +5,21 @@ import {connect} from "react-redux";
 
 // import custom Components
 import Service from "./common/service";
-import BrandBlock from "./common/brand-block";
+import BranbdBlock from "./common/brand-block";
 import NewProduct from "../common/new-product";
 import Breadcrumb from "../common/breadcrumb";
 import DetailsWithPrice from "./common/product/details-price";
+import FashionDetailsWithPrice from "./categories/fashion-details-price";
 import DetailsTopTabs from "./common/details-top-tabs";
 import { addToCart, addToCartUnsafe, addToWishlist } from '../../actions'
 import ImageZoom from './common/product/image-zoom'
 import SmallImages from './common/product/small-image'
+import {FASHION_PRODUCT} from "../../constants/ActionTypes";
+import PropTypes from "prop-types";
 
 
 
-class LeftSideBar extends Component {
+class SingleProduct extends Component {
 
     constructor() {
         super();
@@ -36,7 +39,7 @@ class LeftSideBar extends Component {
             nav2: this.slider2
         });
     }
-    
+
     filterClick() {
         document.getElementById("filter").style.left = "-15px";
     }
@@ -44,8 +47,17 @@ class LeftSideBar extends Component {
         document.getElementById("filter").style.left = "-365px";
     }
 
+    switchPriceDetailsComponent = (productCategory,symbol,item,navOne,addTocart,addToCartUnsafe,addToWishlist)=>{
+        switch (productCategory) {
+            case FASHION_PRODUCT:
+                return <FashionDetailsWithPrice symbol={symbol} item={item} navOne={navOne} addToCartClicked={addToCart} BuynowClicked={addToCartUnsafe} addToWishlistClicked={addToWishlist}/>
+            default:
+                return <DetailsWithPrice symbol={symbol} item={item} navOne={navOne} addToCartClicked={addToCart} BuynowClicked={addToCartUnsafe} addToWishlistClicked={addToWishlist}/>
+        }
+    };
+
     render(){
-        const {symbol, item, addToCart, addToCartUnsafe, addToWishlist} = this.props
+        const {symbol, item, addToCart, addToCartUnsafe, addToWishlist,categoryType} = this.props
         var products = {
             slidesToShow: 1,
             slidesToScroll: 1,
@@ -60,6 +72,8 @@ class LeftSideBar extends Component {
             dots: false,
             focusOnSelect: true
         };
+
+
 
 
 
@@ -109,7 +123,9 @@ class LeftSideBar extends Component {
                                                 </Slider>
                                                 <SmallImages item={item} settings={productsnav} navOne={this.state.nav1} />
                                             </div>
-                                            <DetailsWithPrice symbol={symbol} item={item} navOne={this.state.nav1} addToCartClicked={addToCart} BuynowClicked={addToCartUnsafe} addToWishlistClicked={addToWishlist} />
+
+                                            {this.switchPriceDetailsComponent(categoryType,symbol,item,this.state.nav1,addToCart,addToCartUnsafe,addToWishlist)}
+
                                         </div>
                                     </div>
                                     <DetailsTopTabs item={item} />
@@ -130,6 +146,10 @@ const mapStateToProps = (state, ownProps) => {
         item: state.data.products.find(el => el.id == productId),
         symbol: state.data.symbol
     }
-}
+};
 
-export default connect(mapStateToProps, {addToCart, addToCartUnsafe, addToWishlist}) (LeftSideBar);
+SingleProduct.propTypes = {
+    categoryType:PropTypes.string.isRequired
+};
+
+export default connect(mapStateToProps, {addToCart, addToCartUnsafe, addToWishlist}) (SingleProduct);

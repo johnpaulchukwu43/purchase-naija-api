@@ -1,22 +1,20 @@
 import React, {Component} from 'react';
 import Slider from 'react-slick';
-import '../common/index.scss';
+import '../../common/index.scss';
 import {connect} from "react-redux";
 
 // import custom Components
-import Service from "./common/service";
-import BrandBlock from "./common/brand-block";
-import NewProduct from "../common/new-product";
-import Breadcrumb from "../common/breadcrumb";
-import DetailsWithPrice from "./common/product/details-price";
-import DetailsTopTabs from "./common/details-top-tabs";
-import { addToCart, addToCartUnsafe, addToWishlist } from '../../actions'
-import ImageZoom from './common/product/image-zoom'
-import SmallImages from './common/product/small-image'
+import NewProduct from "../../common/new-product";
+import Breadcrumb from "../../common/breadcrumb";
 import StickyBox from "react-sticky-box";
-import Filter from "../categories/common/filter";
-import FilterBar from "../categories/common/filter-bar";
-import ProductListing from "../categories/common/product-listing";
+import Filter from "./filter";
+import FilterBar from "./filter-bar";
+import ProductListing from "./product-listing";
+import { getProductCategory } from '../../../actions'
+import PropTypes from "prop-types";
+import {FASHION_PRODUCTS_ENDPOINT} from "../../../constants/endpoints";
+import {FASHION_PRODUCT} from "../../../constants/ActionTypes";
+
 
 
 
@@ -26,11 +24,14 @@ class FashionCategory extends Component {
         document.querySelector(".categories-filter").style = "left: -15px";
     }
 
+    componentWillMount(){
+        this.props.getProductCategory(FASHION_PRODUCTS_ENDPOINT,FASHION_PRODUCT);
+    }
     render() {
         return (
             <div>
 
-                <Breadcrumb title={'Collection'}/>
+                <Breadcrumb title={'Fashion Corner'}/>
 
                 <section className="section-b-space">
                     <div className="collection-wrapper">
@@ -59,23 +60,14 @@ class FashionCategory extends Component {
                                                 <div className="col-sm-12">
                                                     <div className="top-banner-wrapper">
                                                         <a href="#"><img
-                                                            src={`${process.env.PUBLIC_URL}/assets/images/mega-menu/2.jpg`}
+                                                            src={`${process.env.PUBLIC_URL}/assets/images/home-banner/1.jpg`}
                                                             className="img-fluid" alt=""/></a>
                                                         <div className="top-banner-content small-section">
-                                                            <h4>fashion</h4>
+                                                            <h4>Fashion</h4>
                                                             <h5>Lorem Ipsum is simply dummy text of the printing and
                                                                 typesetting industry.</h5>
-                                                            <p>Lorem Ipsum is simply dummy text of the printing and
-                                                                typesetting industry. Lorem Ipsum has been the
-                                                                industry's standard dummy text ever since the 1500s,
-                                                                when an unknown printer took a galley of type and
-                                                                scrambled it to make a type specimen book. It has
-                                                                survived not only five centuries, but also the leap into
-                                                                electronic typesetting, remaining essentially unchanged.
-                                                                It was popularised in the 1960s with the release of
-                                                                Letraset sheets containing Lorem Ipsum passages, and
-                                                                more recently with desktop publishing software like
-                                                                Aldus PageMaker including versions of Lorem Ipsum. </p>
+                                                            <p>Browse through our array of carefully curated lifestyle products from local Nigerian brands designed to meet your needs.
+                                                                From clothes and  shoes to bags and accessories, stay on top of all the latest fashion trends with Purchase Niaja </p>
                                                         </div>
                                                     </div>
                                                     <div className="collection-product-wrapper">
@@ -116,5 +108,11 @@ class FashionCategory extends Component {
             </div>
         )
     }
+
 }
-export default FashionCategory
+
+FashionCategory.propTypes = {
+    getProductCategory: PropTypes.func.isRequired
+};
+
+export default connect(null,{getProductCategory})(FashionCategory);

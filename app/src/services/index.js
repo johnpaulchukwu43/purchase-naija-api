@@ -72,6 +72,29 @@ export const getVisibleproducts = (data, { brand, color, value, sortBy, startPri
     });
 }
 
+
+export const getVisibleRawproducts = (data, { brand, color, value, sortBy, startPrice, endPrice }) => {
+    return data.filter(product => {
+
+        const startPriceMatch = typeof value.min !== 'number' || value.min <= product.price;
+        const endPriceMatch = typeof value.max !== 'number' || product.price <= value.max;
+
+        return  startPriceMatch && endPriceMatch;
+    }).sort((product1, product2) => {
+        if (sortBy === 'HighToLow') {
+            return product2.price < product1.price ? -1 : 1;
+        } else if (sortBy === 'LowToHigh') {
+            return product2.price > product1.price ? -1 : 1;
+        } else if (sortBy === 'Newest') {
+            return product2.id < product1.id ? -1 : 1;
+        } else if (sortBy === 'AscOrder') {
+            return product1.name.localeCompare(product2.name);
+        } else if (sortBy === 'DescOrder') {
+            return product2.name.localeCompare(product1.name);
+        }
+    });
+}
+
 export const getCartTotal = cartItems => {
     var total = 0;
     for(var i=0; i<cartItems.length; i++){

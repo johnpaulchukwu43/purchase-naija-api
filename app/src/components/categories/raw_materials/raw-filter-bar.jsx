@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux'
 import {filterSort} from '../../../actions'
-import {getVisibleproducts} from '../../../services';
+import {getVisibleproducts, getVisibleRawproducts} from '../../../services';
 
-class FilterBar extends Component {
+class RawFilterBar extends Component {
 
     //List Layout View
     listLayout(){
@@ -102,8 +102,8 @@ class FilterBar extends Component {
 }
 
 const mapStateToProps = state => ({
-    products: getVisibleproducts(state.data, state.filters),
+    products: getVisibleRawproducts(state.categories.rawMaterialsCategory.data, state.filters),
     filters: state.filters
 })
 
-export default connect(mapStateToProps, {filterSort})(FilterBar);
+export default connect(mapStateToProps, {filterSort})(RawFilterBar);

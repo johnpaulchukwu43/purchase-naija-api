@@ -6,7 +6,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 
 import { getTotal, getCartProducts } from '../../../reducers'
 import { addToCart, addToWishlist, addToCompare } from '../../../actions'
-import {getVisibleproducts} from '../../../services';
+import {getVisibleproducts} from '../../../services/fashionService';
 import ProductListItem from "./product-list-item";
 
 class ProductListing extends Component {
@@ -68,10 +68,10 @@ class ProductListing extends Component {
                             :
                             <div className="row">
                                 <div className="col-sm-12 text-center section-b-space mt-5 no-found" >
-                                    <img src={`${process.env.PUBLIC_URL}/assets/images/empty-search.jpg`} class="img-fluid mb-4" />
+                                    <img src={`${process.env.PUBLIC_URL}/assets/images/empty-search.jpg`} className="img-fluid mb-4" />
                                     <h3>Sorry! Couldn't find the product you were looking For!!!    </h3>
                                     <p>Please check if you have misspelt something or try searching with other words.</p>
-                                    <Link to={`${process.env.PUBLIC_URL}/`} class="btn btn-solid">continue shopping</Link>
+                                    <Link to={`${process.env.PUBLIC_URL}/`} className="btn btn-solid">continue shopping</Link>
                                 </div>
                             </div>
                         }
@@ -82,7 +82,7 @@ class ProductListing extends Component {
     }
 }
 const mapStateToProps = (state) => ({
-    products: getVisibleproducts(state.data, state.filters),
+    products: getVisibleproducts(state.categories.fashionCategory.data, state.filters),
     symbol: state.data.symbol,
 })
 

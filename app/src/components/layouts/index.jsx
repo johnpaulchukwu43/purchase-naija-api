@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import Slider from 'react-slick';
 
 import '../common/index.scss';
-import LatestCollection from "../categories/LatestCollection";
+import LatestCollection from "../categories/latestCollection";
 
 const Content = props => {
 
