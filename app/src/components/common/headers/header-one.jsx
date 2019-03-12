@@ -69,7 +69,7 @@ class HeaderOne extends Component {
             this.setState({isLoading: false})
         })
     };
-
+56
     logout(e) {
         e.preventDefault();
         this.props.logout();
@@ -81,26 +81,36 @@ class HeaderOne extends Component {
         const {translate} = this.props;
 
         const guestLinks = (
-            <li className="mobile-account">
+            <li className="onhover-div  mobile-account">
                 <div><img src={`${process.env.PUBLIC_URL}/assets/images/icon/auth.png`} width="25px" height="25px" className="img-fluid"
                           alt=""/>
                     <i className="fa fa-lg fa-user-circle" aria-hidden="true"></i>
+                    <ul className="show-div setting">
+                        <li>
+                            <h6><Link to={`${process.env.PUBLIC_URL}/pages/user/register`} data-lng="en">Shop on Purchase Naija</Link></h6>
+                        </li>
+                        <li className="divider"></li>
+                        <li>
+                            <h6><Link to={`${process.env.PUBLIC_URL}/pages/service-provider/register`} data-lng="en">Sell on Purchase Naija</Link></h6>
+                        </li>
+                    </ul>
                 </div>
             </li>
         );
 
         const userLinks = (
-            <li className="mobile-account">
+            <li className="onhover-div  mobile-account">
                 <div><img src={`${process.env.PUBLIC_URL}/assets/images/icon/auth.png`} width="25px" height="25px" className="img-fluid"
                           alt=""/>
                     <i className="fa fa-lg fa-user-circle" aria-hidden="true"></i>
                 </div>
-                <ul className="onhover-show-div">
+                <ul className="show-div setting">
                     <li>
-                        <Link to={`${process.env.PUBLIC_URL}/pages/user/login`} data-lng="en">DashBoard</Link>
+                       <h6><Link to={`${process.env.PUBLIC_URL}/pages/user/login`} data-lng="en">DashBoard</Link></h6>
                     </li>
+                    <li className="divider"></li>
                     <li>
-                        <a href="#" onClick={this.logout.bind(this)}>Logout</a>
+                        <h6><a href="#" onClick={this.logout.bind(this)}>Logout</a></h6>
                     </li>
                 </ul>
             </li>
@@ -230,6 +240,9 @@ HeaderOne.propTypes = {
     logout: PropTypes.func.isRequired
 };
 
+HeaderOne.contextTypes = {
+    router: PropTypes.object.isRequired
+};
 function mapStateToProps(state) {
     return {
         auth: state.auth

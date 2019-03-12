@@ -187,7 +187,7 @@ class checkOut extends Component {
                                                     </div>
                                                     <ul className="qty">
                                                         {cartItems.map((item, index) => {
-                                                            return <li key={index}>{item.name} × {item.qty} <span>{symbol} {item.sum}</span></li> })
+                                                            return <li key={index}>{item.name} × {item.qty} <span>{symbol} {total}</span></li> })
                                                         }
                                                     </ul>
                                                     <ul className="sub-total">

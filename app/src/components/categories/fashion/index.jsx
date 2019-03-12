@@ -63,11 +63,10 @@ class FashionCategory extends Component {
                                                             src={`${process.env.PUBLIC_URL}/assets/images/home-banner/1.jpg`}
                                                             className="img-fluid" alt=""/></a>
                                                         <div className="top-banner-content small-section">
-                                                            <h4>Fashion</h4>
-                                                            <h5>Lorem Ipsum is simply dummy text of the printing and
-                                                                typesetting industry.</h5>
-                                                            <p>Browse through our array of carefully curated lifestyle products from local Nigerian brands designed to meet your needs.
-                                                                From clothes and  shoes to bags and accessories, stay on top of all the latest fashion trends with Purchase Niaja </p>
+                                                            <h4>Fashion & Lifestyle</h4>
+                                                            <h5>Browse through our array of carefully curated lifestyle products from local Nigerian
+                                                                brands designed to meet your needs. From clothes and shoes to bags and accessories,
+                                                                stay on top of all the latest fashion trends with Purchase Naija.</h5>
                                                         </div>
                                                     </div>
                                                     <div className="collection-product-wrapper">

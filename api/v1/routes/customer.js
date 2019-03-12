@@ -32,58 +32,46 @@ module.exports = function(router){
                 } else {
                     if (!req.body.lastname) {
                         res.status(400).json({success: false, message: 'Last name is required'});
-                    } else {
-                        if (!req.body.billingAddress1) {
-                            res.status(400).json({success: false, message: 'Billing address must be provided'});
-                        } else {
-                            if (!req.body.phoneNumber) {
-                                res.status(400).json({success: false, message: 'Phone number is required'});
-                            }
-                            else {
-                                var user = new User({
-                                    email: req.body.email,
-                                    password: req.body.password,
-                                    firstname: req.body.firstname,
-                                    lastname: req.body.lastname,
-                                    billingAddress1: req.body.billingAddress1,
-                                    billingAddress2: req.body.billingAddress2,
-                                    phoneNumber: req.body.phoneNumber
-                                });
-                                user.save(function (err) {
-                                    if (err) {
-                                        if (err.code === 11000) {
-                                            res.status(400).json({success: false, message: 'E-mail already exists'});
+                    }  else {
+                        var user = new User({
+                            email: req.body.email,
+                            password: req.body.password,
+                            firstname: req.body.firstname,
+                            lastname: req.body.lastname
+                        });
+                        user.save(function (err) {
+                            if (err) {
+                                if (err.code === 11000) {
+                                    res.status(400).json({success: false, message: 'E-mail already exists'});
+                                } else {
+                                    if (err.errors) {
+                                        if (err.errors.email) {
+                                            res.status(400).json({success: false, message: err.errors.email.message });
                                         } else {
-                                            if (err.errors) {
-                                                if (err.errors.email) {
-                                                    res.status(400).json({success: false, message: err.errors.email.message });
-                                                } else {
-                                                    if (err.errors.phoneNumber) {
-                                                        res.status(400).json({
-                                                            success: false,
-                                                            message: err.errors.phoneNumber.message
-                                                        });
-                                                    } else {
-                                                        if (err.errors.password) {
-                                                            res.status(400).json({
-                                                                success: false,
-                                                                message: err.errors.password.message
-                                                            });
-                                                        } else {
-                                                            res.status(400).json({ success: false, message: err });
-                                                        }
-                                                    }
-                                                }
+                                            if (err.errors.phoneNumber) {
+                                                res.status(400).json({
+                                                    success: false,
+                                                    message: err.errors.phoneNumber.message
+                                                });
                                             } else {
-                                                res.status(500).json({success: false, message: 'Could not create user'});
+                                                if (err.errors.password) {
+                                                    res.status(400).json({
+                                                        success: false,
+                                                        message: err.errors.password.message
+                                                    });
+                                                } else {
+                                                    res.status(400).json({ success: false, message: err });
+                                                }
                                             }
                                         }
                                     } else {
-                                        res.status(200).json({success: true, message: 'Account Created'});
+                                        res.status(500).json({success: false, message: 'Could not create user'});
                                     }
-                                });
+                                }
+                            } else {
+                                res.status(200).json({success: true, message: 'Account Created'});
                             }
-                        }
+                        });
                     }
                 }
             }

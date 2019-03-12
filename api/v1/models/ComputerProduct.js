@@ -26,20 +26,6 @@ const ComputerSchema = new Schema ({
     MemorySpace:{ type: String }
 
 });
-
-/*// Extend function
-const extend = (Schema, obj) => (
-    new mongoose.Schema(
-        Object.assign({}, Schema.obj, obj)
-    )
-);
-
-// Usage:
-const ManufacturingSchema = extend(BaseProductSchema, {
-    SubCategory: {type: String, required: true},
-});*/
-
-
 // module.exports = mongoose.model('BaseProduct', BaseProductSchema);
 module.exports = mongoose.model('Computer', ComputerSchema);
 

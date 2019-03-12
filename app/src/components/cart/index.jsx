@@ -42,7 +42,7 @@ class cartComponent extends Component {
                                             <tr>
                                                 <td>
                                                     <Link to={`${process.env.PUBLIC_URL}/left-sidebar/product/${item.id}`}>
-                                                        <img src={`${item.variants[0].images}`} alt="" />
+                                                        <img src={`${item.imageUrls[0]}`} alt="" />
                                                     </Link>
                                                 </td>
                                                 <td><Link to={`${process.env.PUBLIC_URL}/left-sidebar/product/${item.id}`}>{item.name}</Link>
@@ -56,7 +56,8 @@ class cartComponent extends Component {
                                                             </div>
                                                         </div>
                                                         <div className="col-xs-3">
-                                                            <h2 className="td-color">{symbol}{(item.price*item.discount/100)}</h2>
+                                                            {/*<h2 className="td-color">{symbol}{(item.price*item.discount/100)}</h2>*/}
+                                                            <h2 className="td-color">{symbol}{item.price}</h2>
                                                         </div>
                                                         <div className="col-xs-3">
                                                             <h2 className="td-color">
@@ -67,7 +68,7 @@ class cartComponent extends Component {
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td><h2>{symbol}{(item.price*item.discount/100)}</h2></td>
+                                                <td><h2>{symbol}{item.price}</h2></td>
                                                 <td>
                                                     <div className="qty-box">
                                                         <div className="input-group">
@@ -91,7 +92,7 @@ class cartComponent extends Component {
                                                         <i className="fa fa-times"></i>
                                                     </a>
                                                 </td>
-                                                <td><h2 className="td-color">{symbol}{item.sum}</h2></td>
+                                                <td><h2 className="td-color">{symbol}{total}</h2></td>
                                             </tr>
                                         </tbody> )
                                     })}

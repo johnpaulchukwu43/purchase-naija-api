@@ -6,7 +6,10 @@
 /* 1. General CSS
    1.1. Button CSS
    1.2. Title CSS
-   1.3. Brand logo CSS */
+   1.3. Brand logo CSS
+   1.4 custom-alert
+   */
+
 /* 2. Header CSS */
 /* 3. Home slider CSS  */
 /* 4. Instagram CSS  */
@@ -150,7 +153,7 @@ button {
   background-color: #1b1b1b;
 }
 section ,.section-t-space{
-  padding-top: 70px;
+  padding-top: 20px;
 }
 .section-b-space {
   padding-bottom: 70px;
@@ -391,7 +394,7 @@ button {
   letter-spacing: 0.05em;
   border:2px solid $theme-deafult;
   position:relative;
-  color: $black;
+  color: $theme-deafult;
   &:before {
     -webkit-transition:0.5s all ease;
     transition:0.5s all ease;
@@ -621,6 +624,15 @@ button {
       transition: .5s ease;
     }
   }
+}
+
+/*=====================
+    1.4.Custom alert div start
+==========================*/
+
+.custom-alert-warning {
+  color: #a7a4a4;
+  background-color: #f8f8f8;
 }
 
 
@@ -4440,7 +4452,6 @@ footer{
     }
     h5 {
       font-size: 16px;
-      font-weight: 600;
       color: lighten($black, 26.5%);
       letter-spacing: 1px;
       line-height: 1.2;

@@ -1,5 +1,10 @@
 import isEmpty from 'lodash/isEmpty';
-import {GET_ERRORS, SET_CURRENT_USER} from "../constants/ActionTypes";
+import {
+    CREATE_PROVIDER_SUCCESSFUL,
+    CREATE_USER_SUCCESSFUL,
+    GET_ERRORS,
+    SET_CURRENT_USER
+} from "../constants/ActionTypes";
 
 const initialState = {
     isAuthenticated: false,
@@ -17,6 +22,18 @@ export default (state = initialState, action = {}) => {
             return {
                 error:action.payload
             };
+
+         case CREATE_USER_SUCCESSFUL:
+             return{
+                 isRegistered: true,
+                 message:"Created User Successfully"
+             };
+        case CREATE_PROVIDER_SUCCESSFUL:
+            return{
+                isRegistered: true,
+                message:"Created Provider Successfully"
+            };
+
         default:
             return state;
     }

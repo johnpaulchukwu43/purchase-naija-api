@@ -44,9 +44,9 @@ class Register extends Component {
             let response = this.props.response;
             if (response.error) {
                 toast.error(response.error.message);
-            }else{
-                toast.info("Welcome");
-                this.context.router.history.push('/');
+            }else if(response.isRegistered){
+                toast.info(response.message);
+                this.context.router.history.push('/pages/user/login');
             }
         }).catch((err)=>{
             this.setState({ isLoading: false});

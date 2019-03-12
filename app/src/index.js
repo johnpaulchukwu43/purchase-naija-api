@@ -15,13 +15,13 @@ import Index from './components/layouts/index';
 import jwtDecode from 'jwt-decode';
 
 //Category imports
-import PhonesCategory from './components/categories/phones'
+import PhonesCategory from './components/categories/phones/phones'
 import RawMaterialsCategory from './components/categories/raw_materials'
-import ManufactruingCategory from './components/categories/manufacturing'
+import ManufactruingCategory from './components/categories/manufacturing/manufacturing'
 import FashionCategory from './components/categories/fashion/index'
-import ElectronicsCategory from './components/categories/electronics'
-import ComputerCategory from './components/categories/computer'
-import BeautyCategory from './components/categories/beauty'
+import ElectronicsCategory from './components/categories/electronics/electronics'
+import ComputerCategory from './components/categories/computer/computer'
+import BeautyCategory from './components/categories/beauty/beauty'
 
 
 
@@ -72,7 +72,7 @@ import Details from './components/blogs/details'
 import BlogPage from './components/blogs/blog-page'
 import setAuthorizationToken from "./utils/setAuthorizationToken";
 import {setCurrentUser} from "./actions/AuthActions";
-import Phones from "./components/categories/phones";
+import Phones from "./components/categories/phones/phones";
 import {FASHION_PRODUCT} from "./constants/ActionTypes";
 import {FASHION_SINGLE_PRODUCT_ROUTE} from "./constants/app-routes";
 

@@ -21,14 +21,14 @@ class   Search extends Component {
                                aria-label="Amount (to the nearest Naira)"
                                placeholder="Search......" />
                         <div className="input-group-btn">
-                            <button type="button" className="dropdown-toggle search-categories"
-                                    data-toggle="dropdown">All Categories <span className="caret"></span></button>
-                            <ul className="dropdown-menu">
-                                <li><a href="#">Action</a></li>
-                                <li><a href="#">Another action</a></li>
-                                <li className="divider"></li>
-                                <li><a href="#">Separated link</a></li>
-                            </ul>
+                            {/*<button type="button" className="dropdown-toggle search-categories"*/}
+                                    {/*data-toggle="dropdown">All Categories <span className="caret"></span></button>*/}
+                            {/*<ul className="dropdown-menu">*/}
+                                {/*<li><a href="#">Action</a></li>*/}
+                                {/*<li><a href="#">Another action</a></li>*/}
+                                {/*<li className="divider"></li>*/}
+                                {/*<li><a href="#">Separated link</a></li>*/}
+                            {/*</ul>*/}
                         </div>
                         <div className="input-group-append">
                             <button className="btn btn-solid">

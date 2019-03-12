@@ -14,36 +14,6 @@ const jwt = require('jsonwebtoken');
 var randomstring = require("randomstring");
 var moment = require('moment');
 
-
-const multer = require('multer');
-
-// set the directory for the uploads to the uploaded to
-var DIR = './productImage';
-
-//define the type of upload multer would be doing and pass in its destination, in our case, its a single file with the name photo
-// var upload = multer({dest: DIR}).single('file');
-
-// adding the storage for the pictures to be stored in
-var storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null,  DIR)
-    },
-    filename: function (req, file, cb) {
-        var fileObj = {
-            "image/png": ".png",
-            "image/jpeg": ".jpeg"
-            // "image/jpg": ".jpg"
-        };
-        if (fileObj[file.mimetype] == undefined) {
-            cb(new Error("file format not valid"));
-        } else {
-            cb(null, file.fieldname + '-' + Date.now() + fileObj[file.mimetype])
-        }
-    }
-});
-
-var upload = multer({ storage: storage }).single('file');
-
 module.exports = function(router){
 
 

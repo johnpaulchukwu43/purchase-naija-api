@@ -82,9 +82,9 @@ const UserSchema = new Schema ({
     password: { type: String, required: true, validate: passwordValidate },
     firstname: { type: String, required: true } ,
     lastname: { type: String, required: true },
-    billingAddress1: { type: String, required: true },
+    billingAddress1: { type: String},
     billingAddress2: { type: String},
-    phoneNumber: { type: String, validate: phoneNumberValidate }
+    phoneNumber: { type: String}
 });
 
 

@@ -50,11 +50,6 @@ class ProductListing extends Component {
                                 next={this.fetchMoreItems}
                                 hasMore={this.state.hasMoreItems}
                                 loader={<div className="loading-cls"></div>}
-                                endMessage={
-                                    <p className="seen-cls seen-it-cls">
-                                        <b>Yay! You have seen it all</b>
-                                    </p>
-                                }
                             >
                                 <div className="row">
                                     { products.slice(0, this.state.limit).map((product, index) =>

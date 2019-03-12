@@ -42,7 +42,7 @@ const Content = props => {
                                                         <div>
                                                             <h4>welcome to fashion</h4>
                                                             <h1>men fashion</h1>
-                                                            <Link to="/" className="btn btn-solid"> shop now</Link>
+                                                            <Link to={`${process.env.PUBLIC_URL}/product/category/fashion`} className="btn btn-solid"> shop now</Link>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -147,7 +147,7 @@ const Content = props => {
                                                 </div>
                                             </div>
                                             <div style={{position: 'absolute', top: '50%', left: '20%'}}>
-                                                <Link to="/">
+                                                <Link to={`${process.env.PUBLIC_URL}/product/category/raw_materials`}>
                                                     <h4 style={{
                                                         color: 'white',
                                                         font: 'size 10px',
@@ -190,7 +190,7 @@ const Content = props => {
                                                 </div>
                                             </div>
                                             <div style={{position: 'absolute', top: '50%', left: '20%'}}>
-                                                <Link to="/">
+                                                <Link to={`${process.env.PUBLIC_URL}/product/category/manufacturing`}>
                                                     <h4 style={{
                                                         color: 'white',
                                                         font: 'size 10px',
@@ -230,7 +230,9 @@ const Content = props => {
 
                                         </div>
                                         <div style={{position: 'absolute', top: '50%', left: '30%'}}>
-                                            <h4 style={{color: 'white', font: '10', fontWeight: 'bold'}}>PRODUCTS</h4>
+                                            <Link to={`${process.env.PUBLIC_URL}/product/category/fashion`}>
+                                                <h4 style={{color: 'white', font: '10', fontWeight: 'bold'}}>FASHION & LIFESTYLE</h4>
+                                            </Link>
                                             <i className="fa fa-angle-down fa-2x"
                                                style={{color: 'white', marginLeft: '50px', cursor: 'pointer'}}></i>
                                         </div>
@@ -270,7 +272,10 @@ const Content = props => {
 
 
                                         <div style={{position: 'absolute', top: '50%', left: '35%'}}>
-                                            <h4 style={{color: "#fff", font: "size 10px"}}>SERVICE</h4>
+                                            <Link to={`${process.env.PUBLIC_URL}/`}>
+                                                <h4 style={{color: "#fff", font: "size 10px"}}>SERVICE</h4>
+                                            </Link>
+
                                             <i className="fa fa-angle-down fa-2x"
                                                style={{color: 'white', marginLeft: '40px', cursor: 'pointer'}}></i>
                                         </div>

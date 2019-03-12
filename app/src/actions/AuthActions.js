@@ -1,11 +1,11 @@
-import {GET_ERRORS, SET_CURRENT_USER} from "../constants/ActionTypes";
+import {CREATE_USER_SUCCESSFUL, GET_ERRORS, SET_CURRENT_USER} from "../constants/ActionTypes";
 import setAuthorizationToken from "../utils/setAuthorizationToken";
 import axios from "axios";
 import jwtDecode from 'jwt-decode';
 import {
     LOGIN_SERVICE_PR0_ENDPOINT, LOGIN_USER_ENDPOINT,
     REGISTER_SERVICE_PR0_ENDPOINT,
-    REGISTER_USER_ENDPOINT
+    REGISTER_USER_ENDPOINT,
 } from "../constants/endpoints";
 
 
@@ -37,7 +37,9 @@ export function login(data) {
 }
 export function userSignupRequest(userData) {
     return dispatch => {
-        return axios.post(REGISTER_USER_ENDPOINT, userData).then(res=>{}).catch(err=>{
+        return axios.post(REGISTER_USER_ENDPOINT, userData).then(res=>{
+            userRegisterSuccess(dispatch)
+        }).catch(err=>{
             throwError(dispatch,err);
         });
     }
@@ -53,7 +55,9 @@ export function loginServiceProviderRequest(data) {
 }
 export function SignUpServiceProviderRequest(userData) {
     return dispatch => {
-        return axios.post(REGISTER_SERVICE_PR0_ENDPOINT, userData).then(res=>{}).catch(err=>{
+        return axios.post(REGISTER_SERVICE_PR0_ENDPOINT, userData).then(res=>{
+            providerRegisterSuccess(dispatch)
+        }).catch(err=>{
             throwError(dispatch,err);
         });
     };
@@ -63,6 +67,18 @@ const throwError = (dispatch,err)=>{
     dispatch({
         type: GET_ERRORS,
         payload: err.response.data
+    });
+};
+
+const userRegisterSuccess = (dispatch)=>{
+    dispatch({
+        type:CREATE_USER_SUCCESSFUL
+    });
+};
+
+const providerRegisterSuccess = (dispatch)=>{
+    dispatch({
+        type:CREATE_USER_SUCCESSFUL
     });
 };
 
