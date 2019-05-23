@@ -1,0 +1,52 @@
+/*
+ Created by Johnpaul Chukwu @ $
+ Roles and Authorities on System
+*/
+
+const roles = {
+    SUPER_ADMIN: "super-admin",
+    PROVIDER_ADMIN: "provider-admin",
+    CUSTOMER: "customer",
+    GUEST: "guest"
+};
+
+const applicationRoleAuthorities =
+    {
+        PROVIDER_ADMIN_AUTHORITIES:
+        {
+            CAN_UPLOAD_ALL_PRODUCTS: "CAN_UPLOAD_ALL_PRODUCTS",
+            CAN_VIEW_MY_PRODUCTS: "CAN_VIEW_MY_PRODUCTS",
+            CAN_DELETE_MY_PRODUCTS: "CAN_DELETE_MY_PRODUCTS",
+            CAN_EDIT_MY_PRODUCTS: "CAN_EDIT_MY_PRODUCTS",
+            CAN_UPDATE_MY_PROFILE_AS_PROVIDER: "CAN_UPDATE_MY_PROFILE_AS_PROVIDER",
+            CAN_VIEW_MY_ORDERS_AS_PROVIDER: "CAN_VIEW_MY_ORDERS_AS_PROVIDER",
+            CAN_UPDATE_MY_ORDERS_DELIVERY_STATUS: "CAN_UPDATE_MY_ORDERS_DELIVERY_STATUS",
+        },
+
+        SUPER_ADMIN_AUTHORITIES:
+            {
+                CAN_CHANGE_SYSTEM_SETTINGS: "CAN_CHANGE_SYSTEM_SETTINGS",
+                CAN_CHANGE_SITE_LAYOUT: "CAN_CHANGE_SITE_LAYOUT",
+                CAN_VIEW_ALL_PROVIDERS: "CAN_VIEW_ALL_PROVIDERS",
+                CAN_VIEW_PROVIDERS: "CAN_VIEW_PROVIDERS",
+                CAN_EDIT_PROVIDERS_DETAIL: "CAN_EDIT_PROVIDERS_DETAIL",
+                CAN_DISABLE_PROVIDER: "CAN_DISABLE_PROVIDER",
+                CAN_ENABLE_PROVIDER: "CAN_ENABLE_PROVIDER",
+                CAN_VIEW_ALL_PRODUCTS: "CAN_VIEW_ALL_PRODUCTS",
+                CAN_EDIT_ALL_PRODUCTS: "CAN_EDIT_ALL_PRODUCTS",
+                CAN_UPLOAD_ALL_PRODUCTS: "CAN_UPLOAD_ALL_PRODUCTS",
+                CAN_VIEW_MY_PRODUCTS: "CAN_VIEW_MY_PRODUCTS",
+                CAN_DELETE_MY_PRODUCTS: "CAN_DELETE_MY_PRODUCTS",
+                CAN_EDIT_MY_PRODUCTS: "CAN_DELETE_MY_PRODUCTS",
+                CAN_VIEW_MY_ORDERS_AS_PROVIDER: "CAN_VIEW_MY_ORDERS_AS_PROVIDER",
+                CAN_VIEW_ALL_ORDERS: "CAN_VIEW_ALL_ORDERS",
+                CAN_UPDATE_MY_PROFILE_AS_PROVIDER: "CAN_UPDATE_MY_PROFILE_AS_PROVIDER",
+                CAN_UPDATE_MY_ORDERS_DELIVERY_STATUS: "CAN_UPDATE_MY_ORDERS_DELIVERY_STATUS",
+            }
+
+    };
+
+module.exports = {
+    roles:roles,
+    applicationRoleAuthorities:applicationRoleAuthorities
+};
