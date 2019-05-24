@@ -19,7 +19,12 @@ let base_path = '/api/v1';
 const app = express();
 
 //db connection
-mongoose.connect(secret.database, function (err) {
+console.log(JSON.stringify(secret));
+mongoose.connect(secret.database, {
+    "user":secret.databaseUsername,
+    "pass":secret.databasePassword,
+    "authSource":secret.authDatabase
+}, (err)=> {
     if (err) {
         console.log(err);
     } else {
