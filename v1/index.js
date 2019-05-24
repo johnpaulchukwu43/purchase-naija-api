@@ -18,6 +18,7 @@ let base_path = '/api/v1';
 
 const app = express();
 
+const port = secret.port || 5000;
 //db connection
 console.log(JSON.stringify(secret));
 mongoose.connect(secret.database, {
@@ -64,7 +65,7 @@ app.use(base_path,serviceProvider);
 app.use(base_path,guest);
 app.use(base_path,transactions);
 
-app.listen(secret.port, function (err) {
+app.listen(port, function (err) {
     if (err) throw err;
-    console.log("Server is running " + secret.port);
+    console.log("Server is running " + port);
 });
