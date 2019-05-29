@@ -90,12 +90,12 @@ function searchAllCategoriesForProduct(req){
     var promises = [];
     var models =[
         Fashion,
-        Beauty,
-        Fashion,
         rawMaterials,
         Computer,
-        Manufacturing,
-        Electronics
+        Phones,
+        Beauty,
+        Electronics,
+        Manufacturing
     ];
     var listOfProducts =[];
     return new Promise((resolve,reject)=>{
