@@ -9,5 +9,6 @@ module.exports = {
     paystackKey:process.env.PAYSTACK_KEY,
     elasticSearchUrl:process.env.ELASTIC_SEARCH_URL,
     databaseUsername:process.env.DATABASE_USERNAME,
-    databasePassword:process.env.DATABASE_PASSWORD
+    databasePassword:process.env.DATABASE_PASSWORD,
+    nodeEnv:process.env.NODE_ENV
 };

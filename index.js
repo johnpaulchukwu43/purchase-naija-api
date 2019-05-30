@@ -21,17 +21,31 @@ const app = express();
 const port = secret.port || 5000;
 //db connection
 console.log(JSON.stringify(secret));
-mongoose.connect(secret.database, {
-    "user":secret.databaseUsername,
-    "pass":secret.databasePassword,
-    "authSource":secret.authDatabase
-}, (err)=> {
-    if (err) {
-        console.log(err);
-    } else {
-        console.log("Connected to the database");
-    }
-});
+
+const environment = secret.nodeEnv;
+
+if(environment === 'development'){
+    mongoose.connect(secret.database, { useNewUrlParser: true }, (err)=> {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log("Connected to the database");
+        }
+    });
+}else{
+    mongoose.connect(secret.database, {
+        "user":secret.databaseUsername,
+        "pass":secret.databasePassword,
+        "authSource":secret.authDatabase
+    }, (err)=> {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log("Connected to the database");
+        }
+    });
+}
+
 
 //elasticsearch set up
 syncCollectionsWithElasticSearch();
