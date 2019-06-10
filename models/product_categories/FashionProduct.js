@@ -6,7 +6,10 @@ const fashion = require('../../common/constants').fashionCollection;
 
 const schema = Object.assign({},baseProductSchema ,{
     productCategory: { type: String , es_type:'text', default: fashion},
-    size:{ type: String , es_type:'text' },
+    size: [{
+        type: String,
+        es_type:'text'
+    }],
     brand:{ type: String , es_type:'text' },
     gender:{ type: String , es_type:'text',required:true },
     subCategory:{ type: String , es_type:'text' }
