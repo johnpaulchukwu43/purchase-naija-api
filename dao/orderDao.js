@@ -216,7 +216,7 @@ function createOrderRequest(req, res) {
             if (!carts) {
                 reject({success: false, message: "You have no product in your cart", code: 404});
             } else {
-                //update the cart status from pending to done !!
+                //update the cart status from pending to pending_before_checkout !!
                 updateCartStatus(req, res, PENDING, PENDING_BEFORE_CHECKOUT).then(value => {
                     //after updating cart status, find the updated ones, then create a new order request for each cart found in cartlist
                     getUsersCart(req, PENDING_BEFORE_CHECKOUT).then(newCarts => {
