@@ -4,6 +4,9 @@
 
 */
 
+const isArray = require("./util").isArray;
+const isString = require("./util").isString;
+
 const order_fields = ['ASC', 'DESC'];
 const sortable_fields = ['name', 'createdAt', 'productCode', 'price'];
 const MAX_PRICE_MISSING = "Min price specified but no max price";
@@ -159,7 +162,18 @@ function validatePriceRange(minPrice,maxPrice,res){
     }
 }
 
+function validateIsStringOrArray(item, res) {
+    if(isArray(item)) {
+        return item
+    }
+    if(isString(item)){
+        return item.split(',');
+    }
+    return res.status(400).json({success: false, message: item+" is expected to be either an array or string."});
+}
+
 module.exports = {
     checkBaseServerRequest,
-    validQueryParameters
-}
+    validQueryParameters,
+    validateIsStringOrArray
+};

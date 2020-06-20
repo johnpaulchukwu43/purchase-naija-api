@@ -34,7 +34,7 @@ function validateRequest(req, res) {
                         res.status(400).json({success: false, message: 'Quantity is required'});
                     } else {
                         if (!req.body.provider) {
-                            res.status(400).json({success: false, message: 'Quantity is required'});
+                            res.status(400).json({success: false, message: 'Provider is required'});
                         }else{
                             return true;
                         }
@@ -225,7 +225,7 @@ function removeProductFromCart(req, res) {
                 UserCart.findByIdAndRemove({_id: cartID}).exec()
                     .then(function (done) {
                         if (done) {
-                            //After deleting from cart, we had the products back to our store
+                            //After deleting from cart, we add the products back to our store
                             updateProductInCollection(req, res, productId, category, userCart.quantity, constants.DECREMENT).then(function (result) {
                                 res.status(200).json({success: true, message: 'Cart was successfully deleted'});
                             }).catch(function (err) {
@@ -257,8 +257,9 @@ function updateProductInCollection(req, res, prodId, category, quantityUserWishe
                     reject({message: err, code: 500});
                 }
                 //an anomaly
-                if (!product) {
-                    reject({message: "Product doesn't exist", code: 404});
+                if (product === null) {
+                    return reject({message: "Product doesn't exist, verify the correct and matching product ID, " +
+                            "category and provider were entered.", code: 404});
                 }
                 const quantityLeftInDb = product.quantity;
                 let newQuantity;
@@ -270,7 +271,7 @@ function updateProductInCollection(req, res, prodId, category, quantityUserWishe
                         reject({message: "Product has finished", code: 400});
 
                     }else if (quantityUserWishesToBuy > quantityLeftInDb) {
-                        //in real life scenario, client should prevent this from getting here sef
+                        //in real life scenario, app client should prevent this from getting here sef
                         reject({
                             message: "Insufficient Product Quantity," +
                                       "Quantity Left:" + quantityLeftInDb,

@@ -4,9 +4,10 @@
 const Fashion = require('../models/product_categories/FashionProduct');
 const baseRequest = require('../dao/baseRequest');
 const checkBaseServerRequest = require('../common/validation').checkBaseServerRequest;
+const validateIsStringOrArray = require('../common/validation').validateIsStringOrArray;
 const saveRequestToDb = require('../dao/saveRequest');
 const query = require('../dbqueries/index');
-var appendToObject = require('../common/util').appendToObject;
+const appendToObject = require('../common/util').appendToObject;
 
 
 //validate request fror create fashion product
@@ -49,12 +50,14 @@ function getAllFashionProducts(req,res) {
     var queries = {};
 
     if(req.query.colors){
-        colorQuery = query.byColorRange(req.query.colors.split(','));
+        const colors = validateIsStringOrArray(req.query.colors,res);
+        colorQuery = query.byColorRange(colors);
         queries = appendToObject(colorQuery,queries);
     }
 
     if(req.query.brands){
-        brandQuery = query.byBrandRange(req.query.brands.split(','));
+        const brands = validateIsStringOrArray(req.query.brands,res);
+        brandQuery = query.byBrandRange(brands);
         queries = appendToObject(brandQuery,queries);
     }
 
@@ -79,12 +82,22 @@ function deleteFashionProductById(req,res){
     baseRequest.deleteProductByCategoryAndId(req,res,Fashion);
 }
 
+function getAllAvailableColors(res){
+    baseRequest.getAllAvailableColors(Fashion,res)
+}
+
+function getAllAvailableBrands(res){
+    baseRequest.getAllAvailableBrands(Fashion,res)
+}
+
 module.exports = {
     validateRequest,
     createProduct,
     getAllFashionProducts,
     searchFashionProducts,
     getAllFashionProductsByProvider,
-    deleteFashionProductById
+    deleteFashionProductById,
+    getAllAvailableColors,
+    getAllAvailableBrands,
 
 };

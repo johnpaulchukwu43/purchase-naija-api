@@ -289,6 +289,39 @@ function deleteProductByCategoryAndId(req,res,productType){
     });
 }
 
+function getDistinctFieldValues(field,productType){
+    return new Promise((resolve,reject)=> {
+        productType.distinct(field).then(function (result) {
+            console.log(JSON.stringify(result));
+            resolve(result)
+        }).catch(function (err) {
+            reject(err.message);
+        })
+    });
+}
+
+function getAllAvailableColors(productType,res){
+    //todo what to do ? if colors field is renamed in base model
+    getDistinctFieldValues("colors",productType)
+        .then(function (allAvailableColors) {
+            return res.status(200).json({success: true, colors:allAvailableColors});
+        })
+        .catch(function (errMessage) {
+            console.log(errMessage);
+            return res.status(500).json({success: false, message: 'An error occurred. Try again later.'});
+        })
+}
+
+function getAllAvailableBrands(productType,res){
+    getDistinctFieldValues("brand",productType)
+        .then(function (allAvailableColors) {
+            return res.status(200).json({success: true, brands:allAvailableColors});
+        })
+        .catch(function (errMessage) {
+            console.log(errMessage);
+            return res.status(500).json({success: false, message: 'An error occurred. Try again later.'});
+        })
+}
 
 
 module.exports = {
@@ -302,6 +335,9 @@ module.exports = {
     searchCategoryForProduct,
     prepareCartResult,
     syncCollectionsWithElasticSearch,
-    getCategoryCollectionModel
+    getCategoryCollectionModel,
+    getAllAvailableColors,
+    getAllAvailableBrands
+
 
 };

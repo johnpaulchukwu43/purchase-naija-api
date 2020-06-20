@@ -134,7 +134,14 @@ module.exports = function (router) {
         }
     });
 
+    //Totals
+    router.get('/products/fashion/getAllColors/', function (req, res) {
+        fashionDao.getAllAvailableColors(res);
+    });
 
+    router.get('/products/fashion/getAllBrands/', function (req, res) {
+        fashionDao.getAllAvailableBrands(res);
+    });
     /*// searching for products based on category
     router.get('/products/search/:productCategory', function (req,res) {
         Products.find({ productCategory: req.params.productCategory }, function (err, products) {

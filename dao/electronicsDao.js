@@ -5,7 +5,8 @@ const Electronics = require('../models/product_categories/ElectronicsProduct');
 const baseRequest = require('../dao/baseRequest');
 const checkBaseServerRequest = require('../common/validation').checkBaseServerRequest;
 const query = require('../dbqueries/index');
-var appendToObject = require('../common/util').appendToObject;
+const appendToObject = require('../common/util').appendToObject;
+const validateIsStringOrArray = require('../common/validation').validateIsStringOrArray;
 const saveRequestToDb = require('../dao/saveRequest');
 
 //validate request fror create electronics product
@@ -41,14 +42,16 @@ function getAllElectronicProducts(req,res) {
     var brandQuery;
     var colorQuery;
     var queries = {};
-    if(req.query.brands){
-        brandQuery = query.byBrandRange(req.query.brands.split(','));
-        queries = appendToObject(brandQuery,queries);
+    if(req.query.colors){
+        const colors = validateIsStringOrArray(req.query.colors,res);
+        colorQuery = query.byColorRange(colors);
+        queries = appendToObject(colorQuery,queries);
     }
 
-    if(req.query.colors){
-        colorQuery = query.byColorRange(req.query.colors.split(','));
-        queries = appendToObject(colorQuery,queries);
+    if(req.query.brands){
+        const brands = validateIsStringOrArray(req.query.brands,res);
+        brandQuery = query.byBrandRange(brands);
+        queries = appendToObject(brandQuery,queries);
     }
     baseRequest.getProductByCategory(req,res,queries,Electronics)
 }
